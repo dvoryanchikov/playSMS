@@ -16,27 +16,28 @@ switch ($op) {
 		$extras = array('ORDER BY' => 'smslog_id DESC', 'LIMIT' => $nav['limit'], 'OFFSET' => $nav['offset']);
 		$list = dba_search($table.' AS A', '*', $conditions, $keywords, $extras, $join);
 
-		$actions_box = "
-			<div id=actions_box>
-			<div id=actions_box_left><input type=submit name=go value=\""._('Export')."\" class=button /></div>
-			<div id=actions_box_center>".$nav['form']."</div>
-			<div id=actions_box_right><input type=submit name=go value=\""._('Delete')."\" class=button /></div>
-			</div>";
-
 		$content = "
-			<h2>"._('All outgoing SMS')."</h2>
+			<h2>"._('All outgoing messages')."</h2>
 			<p>".$search['form']."</p>
-			<form name=\"fm_outgoing\" action=\"index.php?app=menu&inc=all_outgoing&op=actions\" method=post onSubmit=\"return SureConfirm()\">
-			".$actions_box."
+			<form id=fm_all_outgoing name=fm_all_outgoing action=\"index.php?app=menu&inc=all_outgoing&op=actions\" method=post onSubmit=\"return SureConfirm()\">
+			<input type=hidden name=go value=delete>
+			<div class=actions_box>
+				<div class=pull-left>
+					<a href=\"index.php?app=menu&inc=all_outgoing&op=actions&go=export\">".$core_config['icon']['export']."</a>
+				</div>
+				<div class=pull-right>
+					<a href='#' onClick=\"return SubmitConfirm('"._('Are you sure you want to delete these items ?')."', 'fm_all_outgoing');\">".$core_config['icon']['delete']."</a>
+				</div>
+			</div>
 			<div class=table-responsive>
 			<table class=playsms-table-list>
 			<thead>
 			<tr>
 				<th width=20%>"._('User')."</th>
 				<th width=15%>"._('Gateway')."</th>
-				<th width=25%>"._('To')."</th>
-				<th width=35%>"._('Message')."</th>
-				<th width=5% class=\"sorttable_nosort\"><input type=checkbox onclick=CheckUncheckAll(document.fm_outgoing)></th>
+				<th width=20%>"._('To')."</th>
+				<th width=40%>"._('Message')."</th>
+				<th width=5% class=\"sorttable_nosort\"><input type=checkbox onclick=CheckUncheckAll(document.fm_all_outgoing)></th>
 			</tr>
 			</thead>
 			<tbody>";
@@ -106,7 +107,7 @@ switch ($op) {
 			</tbody>
 			</table>
 			</div>
-			".$actions_box."
+			<div class=pull-right>".$nav['form']."</div>
 			</form>";
 
 		if ($err = $_SESSION['error_string']) {
@@ -119,7 +120,7 @@ switch ($op) {
 		$search = themes_search_session();
 		$go = $_REQUEST['go'];
 		switch ($go) {
-			case _('Export'):
+			case 'export':
 				$conditions = array('flag_deleted' => 0);
 				$table = _DB_PREF_.'_tblSMSOutgoing';
 				$join = 'INNER JOIN '._DB_PREF_.'_tblUser AS B ON A.uid=B.uid';
@@ -139,7 +140,7 @@ switch ($op) {
 				$fn = 'all_outgoing-'.$core_config['datetime']['now_stamp'].'.csv';
 				core_download($content, $fn, 'text/csv');
 				break;
-			case _('Delete'):
+			case 'delete':
 				for ($i=0;$i<$nav['limit'];$i++) {
 					$checkid = $_POST['checkid'.$i];
 					$itemid = $_POST['itemid'.$i];

@@ -7,33 +7,33 @@ switch ($op) {
 		$search_category = array(_('Name') => 'A.name', _('Mobile') => 'mobile', _('Email') => 'email', _('Group code') => 'code');
 		$base_url = 'index.php?app=menu&inc=tools_phonebook&op=phonebook_list';
 		$search = themes_search($search_category, $base_url);
-		$conditions = array('B.uid' => $core_config['user']['uid'], 'C.gpid=B.id');
-		$keywords = $search['dba_keywords'];
+		
+		$fields = 'A.id AS pid, A.name AS name, A.mobile AS mobile, A.email AS email, B.code AS code';
 		$join = 'INNER JOIN '._DB_PREF_.'_toolsPhonebook_group AS B ON A.uid=B.uid ';
-		$join .= 'INNER JOIN playsms_toolsPhonebook_group_contacts AS C ON A.id = C.pid AND C.gpid = B.id';
+		$join .= 'INNER JOIN '._DB_PREF_.'_toolsPhonebook_group_contacts AS C ON A.id=C.pid AND B.id=C.gpid';
+		$conditions = array('B.uid' => $core_config['user']['uid']);
+		$keywords = $search['dba_keywords'];
 		$count = dba_count(_DB_PREF_.'_toolsPhonebook AS A', $conditions, $keywords, '', $join);
 		$nav = themes_nav($count, $search['url']);
 		$extras = array('ORDER BY' => 'A.name, mobile', 'LIMIT' => $nav['limit'], 'OFFSET' => $nav['offset']);
-		$fields = 'A.id AS pid, A.name AS name, A.mobile AS mobile, A.email AS email, B.code AS code';
 		$list = dba_search(_DB_PREF_.'_toolsPhonebook AS A', $fields, $conditions, $keywords, $extras, $join);
-
-		$actions_box = "
-			<div id=actions_box>
-				<div id=actions_box_left>
-					<a href='index.php?app=menu&inc=tools_phonebook&op=phonebook_add'>".$core_config['icon']['add']."</a>
-				</div>
-				<div id=actions_box_center>".$nav['form']."</div>
-			</div>";
 
 		$content = "
 			<h2>"._('Phonebook')."</h2>
 			<p>".$search['form']."</p>
-			<a href='index.php?app=menu&inc=tools_phonebook&route=group&op=list'>".$core_config['icon']['group']."</a>
-			<a href='index.php?app=menu&inc=tools_phonebook&route=import&op=list'>".$core_config['icon']['import']."</a>
-			<a href='index.php?app=menu&inc=tools_phonebook&op=actions&go=export'>".$core_config['icon']['export']."</a>
 			<form name=fm_phonebook_list id=fm_phonebook_list action='index.php?app=menu&inc=tools_phonebook&op=actions' method=post>
 			<input type=hidden name=go value=delete>
-			".$actions_box."
+			<div class=actions_box>
+				<div class=pull-left>
+					<a href='index.php?app=menu&inc=tools_phonebook&route=group&op=list'>".$core_config['icon']['group']."</a>
+					<a href='index.php?app=menu&inc=tools_phonebook&route=import&op=list'>".$core_config['icon']['import']."</a>
+					<a href='index.php?app=menu&inc=tools_phonebook&op=actions&go=export'>".$core_config['icon']['export']."</a>
+					<a href='index.php?app=menu&inc=tools_phonebook&op=phonebook_add'>".$core_config['icon']['add']."</a>
+				</div>
+				<div class=pull-right>
+					<a href='#' onClick=\"return SubmitConfirm('" . _('Are you sure you want to delete these items ?') . "', 'fm_phonebook_list');\">" . $core_config['icon']['delete'] . "</a>						
+				</div>
+			</div>
 			<div class=table-responsive>
 			<table class=playsms-table-list>
 			<thead>
@@ -42,10 +42,7 @@ switch ($op) {
 				<th width=25%>"._('Mobile')."</th>
 				<th width=30%>"._('Email')."</th>
 				<th width=15%>"._('Group code')."</th>
-				<th width=5%>
-					<input type=checkbox onclick=CheckUncheckAll(document.fm_phonebook_list)>
-					<a href='#' onClick=\"return SubmitConfirm('"._('Are you sure you want to delete these items ?')."', 'fm_phonebook_list');\">".$core_config['icon']['delete']."</a>
-				</th>
+				<th width=5%><input type=checkbox onclick=CheckUncheckAll(document.fm_phonebook_list)></th>
 			</tr>
 			</thead>
 			<tbody>";
@@ -77,7 +74,7 @@ switch ($op) {
 			</tbody>
 			</table>
 			</div>
-			".$actions_box."
+			<div class=pull-right>".$nav['form']."</div>
 			</form>";
 
 		if ($err = $_SESSION['error_string']) {
@@ -154,12 +151,12 @@ switch ($op) {
 		$go = $_REQUEST['go'];
 		switch ($go) {
 			case 'export':
-				$conditions = array('B.uid' => $core_config['user']['uid'], 'C.gpid=B.id');
-				$keywords = $search['dba_keywords'];
+				$fields = 'A.id AS pid, A.name AS name, A.mobile AS mobile, A.email AS email, B.code AS code';
 				$join = 'INNER JOIN '._DB_PREF_.'_toolsPhonebook_group AS B ON A.uid=B.uid ';
 				$join .= 'INNER JOIN playsms_toolsPhonebook_group_contacts AS C ON A.id = C.pid AND C.gpid = B.id';
+				$conditions = array('B.uid' => $core_config['user']['uid'], 'C.gpid=B.id');
+				$keywords = $search['dba_keywords'];
 				$extras = array('ORDER BY' => 'A.name, mobile', 'LIMIT' => $nav['limit'], 'OFFSET' => $nav['offset']);
-				$fields = 'A.id AS pid, A.name AS name, A.mobile AS mobile, A.email AS email, B.code AS code';
 				$list = dba_search(_DB_PREF_.'_toolsPhonebook AS A', $fields, $conditions, $keywords, $extras, $join);
 				$data[0] = array(_('Name'), _('Mobile'), _('Email'), _('Group code'));
 				for ($i=0;$i<count($list);$i++) {

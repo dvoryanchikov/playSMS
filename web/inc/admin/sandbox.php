@@ -3,40 +3,37 @@ defined('_SECURE_') or die('Forbidden');
 if(!isadmin()){forcenoaccess();};
 
 switch ($op) {
-	case "all_incoming":
-		$search_category = array(_('User') => 'username', _('Time') => 'in_datetime', _('From') => 'in_sender', _('Keyword') => 'in_keyword', _('Content') => 'in_message', _('Feature') => 'in_feature');
-		$base_url = 'index.php?app=menu&inc=all_incoming&op=all_incoming';
+	case "sandbox":
+		$search_category = array(_('Time') => 'in_datetime', _('From') => 'in_sender', _('Content') => 'in_message');
+		$base_url = 'index.php?app=menu&inc=sandbox&op=sandbox';
 		$search = themes_search($search_category, $base_url);
-		$conditions = array('flag_deleted' => 0, 'in_status' => 1);
+		$conditions = array('flag_deleted' => 0, 'in_status' => 0);
 		$keywords = $search['dba_keywords'];
-		$join = 'INNER JOIN '._DB_PREF_.'_tblUser AS B ON in_uid=B.uid';
 		$count = dba_count(_DB_PREF_.'_tblSMSIncoming', $conditions, $keywords, '', $join);
 		$nav = themes_nav($count, $search['url']);
-		$extras = array('AND in_keyword' => '!= ""', 'ORDER BY' => 'in_id DESC', 'LIMIT' => $nav['limit'], 'OFFSET' => $nav['offset']);
+		$extras = array('ORDER BY' => 'in_id DESC', 'LIMIT' => $nav['limit'], 'OFFSET' => $nav['offset']);
 		$list = dba_search(_DB_PREF_.'_tblSMSIncoming', '*', $conditions, $keywords, $extras, $join);
 
 		$content = "
-			<h2>"._('All incoming messages')."</h2>
+			<h2>"._('Sandbox')."</h2>
 			<p>".$search['form']."</p>
-			<form id=fm_all_incoming name=fm_all_incoming action=\"index.php?app=menu&inc=all_incoming&op=actions\" method=post onSubmit=\"return SureConfirm()\">
+			<form id=fm_sandbox name=fm_sandbox action=\"index.php?app=menu&inc=sandbox&op=actions\" method=post onSubmit=\"return SureConfirm()\">
 			<input type=hidden name=go value=delete>
 			<div class=actions_box>
 				<div class=pull-left>
-					<a href=\"index.php?app=menu&inc=all_incoming&op=actions&go=export\">".$core_config['icon']['export']."</a>
+					<a href=\"index.php?app=menu&inc=sandbox&op=actions&go=export\">".$core_config['icon']['export']."</a>
 				</div>
 				<div class=pull-right>
-					<a href='#' onClick=\"return SubmitConfirm('"._('Are you sure you want to delete these items ?')."', 'fm_all_incoming');\">".$core_config['icon']['delete']."</a>
+					<a href='#' onClick=\"return SubmitConfirm('"._('Are you sure you want to delete these items ?')."', 'fm_sandbox');\">".$core_config['icon']['delete']."</a>
 				</div>
 			</div>
 			<div class=table-responsive>
 			<table class=playsms-table-list>
 			<thead>
 			<tr>
-				<th width=20%>"._('User')."</th>
 				<th width=20%>"._('From')."</th>
-				<th width=20%>"._('Keyword')."</th>
-				<th width=35%>"._('Content')."</th>
-				<th width=5% class=\"sorttable_nosort\"><input type=checkbox onclick=CheckUncheckAll(document.fm_all_incoming)></th>
+				<th width=75%>"._('Content')."</th>
+				<th width=5% class=\"sorttable_nosort\"><input type=checkbox onclick=CheckUncheckAll(document.fm_sandbox)></th>
 			</tr>
 			</thead>
 			<tbody>";
@@ -68,13 +65,11 @@ switch ($op) {
 				$reply = _a('index.php?app=menu&inc=send_sms&op=send_sms&do=reply&message='.urlencode($msg).'&to='.urlencode($in_sender), $core_config['icon']['reply']);
 				$forward = _a('index.php?app=menu&inc=send_sms&op=send_sms&do=forward&message='.urlencode($msg), $core_config['icon']['forward']);
 			}
-			$c_message = "<div id=\"all_incoming_msg\">".$in_message."</div><div id=\"msg_label\">".$in_datetime."&nbsp;".$in_status."</div><div id=\"msg_option\">".$reply.$forward."</div>";
+			$c_message = "<div id=\"sandbox_msg\">".$in_message."</div><div id=\"msg_label\">".$in_datetime."&nbsp;".$in_status."</div><div id=\"msg_option\">".$reply.$forward."</div>";
 			$i--;
 			$content .= "
 				<tr>
-					<td>$in_username</td>
 					<td>$current_sender</td>
-					<td>$in_keyword $c_feature</td>
 					<td>$c_message</td>
 					<td>
 						<input type=hidden name=itemid".$j." value=\"$in_id\">
@@ -101,24 +96,19 @@ switch ($op) {
 		$go = $_REQUEST['go'];
 		switch ($go) {
 			case 'export':
-				$conditions = array('flag_deleted' => 0, 'in_status' => 1);
-				$join = 'INNER JOIN '._DB_PREF_.'_tblUser AS B ON in_uid=B.uid';
-				$extras = array('AND in_keyword' => '!= ""');
-				$list = dba_search(_DB_PREF_.'_tblSMSIncoming', '*', $conditions, $search['dba_keywords'], $extras, $join);
-				$data[0] = array(_('User'), _('Time'), _('From'), _('Keyword'), _('Content'), _('Feature'), _('Status'));
+				$conditions = array('flag_deleted' => 0, 'in_status' => 0);
+				$list = dba_search(_DB_PREF_.'_tblSMSIncoming', '*', $conditions, $search['dba_keywords'], '', $join);
+				$data[0] = array(_('Time'), _('From'), _('Content'));
 				for ($i=0;$i<count($list);$i++) {
 					$j = $i + 1;
 					$data[$j] = array(
-						$list[$i]['username'],
 						core_display_datetime($list[$i]['in_datetime']),
 						$list[$i]['in_sender'],
-						$list[$i]['in_keyword'],
-						$list[$i]['in_message'],
-						$list[$i]['in_feature'],
-						( $list[$i]['in_status'] == 1 ? _('handled') : _('unhandled')));
+						$list[$i]['in_message']
+					);
 				}
 				$content = core_csv_format($data);
-				$fn = 'all_incoming-'.$core_config['datetime']['now_stamp'].'.csv';
+				$fn = 'sandbox-'.$core_config['datetime']['now_stamp'].'.csv';
 				core_download($content, $fn, 'text/csv');
 				break;
 			case 'delete':

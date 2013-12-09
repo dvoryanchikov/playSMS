@@ -1,18 +1,22 @@
 {ERROR}
 <h2>{Inbox}</h2>
 <p>{SEARCH_FORM}</p>
-<form name="fm_inbox" action="index.php?app=menu&inc=user_inbox&op=actions" method=post onSubmit="return SureConfirm()">
-<div id=actions_box>
-	<div id=actions_box_left><input type=submit name=go value="{Export}" class=button /></div>
-	<div id=actions_box_center>{NAV_FORM}</div>
-	<div id=actions_box_right><input type=submit name=go value="{Delete}" class=button /></div>
+<form id="fm_inbox" name="fm_inbox" action="index.php?app=menu&inc=user_inbox&op=actions" method=post>
+<input type=hidden name=go value="delete">
+<div class=actions_box>
+	<div class=pull-left>
+		<a href="index.php?app=menu&inc=user_inbox&op=actions&go=export">{Export}</a>
+	</div>
+	<div class="pull-right">
+		<a href='#' onClick="return SubmitConfirm('{ARE_YOU_SURE}', 'fm_inbox');">{Delete}</a>
+	</div>
 </div>
 <div class=table-responsive>
 <table class=playsms-table-list>
 	<thead>
 		<tr>
-			<th width=30%>{From}</th>
-			<th width=65%>{Message}</th>
+			<th width=20%>{From}</th>
+			<th width=75%>{Message}</th>
 			<th width=5%><input type=checkbox onclick=CheckUncheckAll(document.fm_inbox)></th>
 		</tr>
 	</thead>
@@ -34,9 +38,5 @@
 	</tbody>
 </table>
 </div>
-<div id=actions_box>
-	<div id=actions_box_left><input type=submit name=go value="{Export}" class=button /></div>
-	<div id=actions_box_center>{NAV_FORM}</div>
-	<div id=actions_box_right><input type=submit name=go value="{Delete}" class=button /></div>
-</div>
+<div class=pull-right>{NAV_FORM}</div>
 </form>

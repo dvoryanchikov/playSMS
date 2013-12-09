@@ -143,9 +143,72 @@ table.sortable thead, table.sortable th {
 	width: 300px;
 }
 
+.actions_box {
+	padding: 0;
+	width: 100%;
+	height: 25px;	
+}
+
+.actions_box_left {
+	text-align: left;
+	float: left;
+	width: 25%;
+	margin-top: 5px;
+	margin-bottom: 5px;
+}
+
+.actions_box_center {
+	text-align: center;
+	float: left;
+	width: 50%;
+	padding: 4px 0 0 0;
+	margin-top: 5px;
+	margin-bottom: 5px;
+}
+
+.actions_box_right {
+	text-align: right;
+	float: left;
+	width: 25%;
+	margin-top: 5px;
+	margin-bottom: 5px;
+}
+
+.actions_box_right input {
+	margin-right: -3px;
+}
+
+.search_box {
+	text-align: left;
+	margin-right: 5px;
+}
+
+.search_box_select {
+	float: left;
+	text-align: left;
+	margin-right: 5px;
+}
+
+.search_box_input {
+	text-align: left;
+}
+
+.search_input_category {
+	width: 130px;
+}
+
+.search_input_keyword {
+	width: 270px;
+}
+
 .playsms-nav-form {
 	width: 100%;
 	text-align: center;
+}
+
+.playsms-nav-bar {
+	padding: 0;
+	margin: 0;
 }
 
 .playsms-mandatory {
@@ -262,6 +325,15 @@ table.sortable thead, table.sortable th {
         hyphens: auto;
 }
 
+#sandbox_msg {
+	padding-bottom: 12px;
+	word-break: break-all;
+	-ms-word-break: break-all;
+	-webkit-hyphens: auto;
+	-moz-hyphens: auto;
+        hyphens: auto;
+}
+
 #msg_label {
 	font-size: 11pt;
 	padding-left: 2px;
@@ -297,56 +369,6 @@ table.sortable thead, table.sortable th {
 #message {
 	width: 280px;
 	height: 100px;
-}
-
-#actions_box {
-	padding: 0;
-	width: 100%;
-	height: 45px;	
-}
-
-#actions_box_left {
-	text-align: left;
-	float: left;
-	width: 25%;
-	margin-top: 5px;
-	margin-bottom: 5px;
-}
-
-#actions_box_center {
-	text-align: center;
-	float: left;
-	width: 50%;
-	padding: 4px 0 0 0;
-	margin-top: 5px;
-	margin-bottom: 5px;
-}
-
-#actions_box_right {
-	text-align: right;
-	float: left;
-	width: 25%;
-	margin-top: 5px;
-	margin-bottom: 5px;
-}
-
-#actions_box_right input {
-	margin-right: -3px;
-}
-
-#search_box {
-	text-align: left;
-	margin-right: 5px;
-}
-
-#search_box_select {
-	float: left;
-	text-align: left;
-	margin-right: 5px;
-}
-
-#search_box_input {
-	text-align: left;
 }
 
 #button_back {

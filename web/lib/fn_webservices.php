@@ -198,7 +198,7 @@ function webservices_in($c_username,$src='',$dst='',$kwd='',$datetime='',$c=100,
 	$ret = "ERR 101";
 	$json['status'] = 'ERR';
 	$json['error'] = '101';
-	$conditions['flag_deleted'] = 0;
+	$conditions = array('flag_deleted' => 0, 'in_status' => 1);
 	if ($uid = username2uid($c_username)) {
 		$conditions['in_uid'] = $uid;
 	}
@@ -222,6 +222,7 @@ function webservices_in($c_username,$src='',$dst='',$kwd='',$datetime='',$c=100,
 	if ($last) {
 		$extras['AND in_id'] = '>'.$last;
 	}
+	$extras['AND in_keyword'] = '!= ""';
 	$extras['ORDER BY'] = 'in_datetime DESC';
 	if ($c) {
 		$extras['LIMIT'] = $c;
@@ -248,6 +249,69 @@ function webservices_in($c_username,$src='',$dst='',$kwd='',$datetime='',$c=100,
 			$json['data'][$j]['msg'] = $message;
 			$json['data'][$j]['dt'] = $datetime;
 			$json['data'][$j]['status'] = $status;
+			$j++;
+		}
+		// if DS available by checking content
+		if ($content) {
+			$ret = $content;
+			unset($json['status']);
+			unset($json['error']);
+			$json['multi'] = true;
+		}
+	}
+	return array($ret, $json);
+}
+
+function webservices_sx($c_username,$src='',$dst='',$datetime='',$c=100,$last=false) {
+	$ret = "ERR 101";
+	$json['status'] = 'ERR';
+	$json['error'] = '101';
+	$u = user_getdatabyusername($c_username);
+	if ($u['status'] != 2) {
+		return array($ret, $json);
+	}
+	$uid = $u['uid'];
+	$conditions = array('flag_deleted' => 0, 'in_status' => 0);
+	if ($src) {
+		if ($src[0]=='0') {
+			$c_src = substr($src, 1);
+		} else {
+			$c_src = substr($src, 3);
+		}
+		$keywords['in_sender'] = '%'.$c_src;
+	}
+	if ($dst) {
+		$conditions['in_receiver'] = $dst;
+	}
+	if ($datetime) {
+		$keywords['in_datetime'] = '%'.$datetime.'%';
+	}
+	if ($last) {
+		$extras['AND in_id'] = '>'.$last;
+	}
+	$extras['ORDER BY'] = 'in_datetime DESC';
+	if ($c) {
+		$extras['LIMIT'] = $c;
+	} else {
+		$extras['LIMIT'] = 100;
+	}
+	if ($uid) {
+		$content = '';
+		$j = 0;
+		$list = dba_search(_DB_PREF_.'_tblSMSIncoming', '*', $conditions, $keywords, $extras);
+		foreach ($list as $db_row) {
+			$id = $db_row['in_id'];
+			$src = $db_row['in_sender'];
+			$dst = $db_row['in_receiver'];
+			$message = str_replace('"', "'", $db_row['in_message']);
+			$datetime = $db_row['in_datetime'];
+			$status = $db_row['in_status'];
+			$content .= "\"$id\";\"$src\";\"$dst\";\"$message\";\"$datetime\"\n";
+			$json['data'][$j]['id'] = $id;
+			$json['data'][$j]['src'] = $src;
+			$json['data'][$j]['dst'] = $dst;
+			$json['data'][$j]['msg'] = $message;
+			$json['data'][$j]['dt'] = $datetime;
 			$j++;
 		}
 		// if DS available by checking content
