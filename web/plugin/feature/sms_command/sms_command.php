@@ -1,6 +1,6 @@
 <?php
 defined('_SECURE_') or die('Forbidden');
-if (!valid()) { forcenoaccess(); };
+if (!isadmin()) { forcenoaccess(); };
 
 if ($command_id = $_REQUEST['command_id']) {
 	if (! ($command_id = dba_valid(_DB_PREF_.'_featureCommand', 'command_id', $command_id))) {
