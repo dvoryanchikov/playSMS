@@ -275,6 +275,15 @@ msgstr ""
 msgid "Forward from"
 msgstr ""
 
+msgid "Forward message to email"
+msgstr ""
+
+msgid "Forward message to inbox"
+msgstr ""
+
+msgid "Forward message to mobile"
+msgstr ""
+
 msgid "Forwarded email footer"
 msgstr ""
 
@@ -373,6 +382,10 @@ msgstr ""
 
 msgid "Message"
 msgstr ""
+
+#, fuzzy
+msgid "Message from"
+msgstr "Message template"
 
 msgid "Message template"
 msgstr "Message template"
@@ -563,10 +576,16 @@ msgstr ""
 msgid "Selected incoming SMS has been deleted"
 msgstr ""
 
+msgid "Selected incoming message has been deleted"
+msgstr ""
+
 msgid "Selected message template has been deleted"
 msgstr ""
 
 msgid "Selected outgoing SMS has been deleted"
+msgstr ""
+
+msgid "Selected outgoing message has been deleted"
 msgstr ""
 
 msgid "Send"
@@ -582,6 +601,9 @@ msgid "Send as unicode message"
 msgstr ""
 
 msgid "Send broadcast SMS"
+msgstr ""
+
+msgid "Send message"
 msgstr ""
 
 msgid "Send to"
@@ -747,6 +769,9 @@ msgid "Your email format is invalid"
 msgstr ""
 
 msgid "Your message"
+msgstr ""
+
+msgid "Your message has been delivered to queue"
 msgstr ""
 
 msgid "Your mobile format is invalid"

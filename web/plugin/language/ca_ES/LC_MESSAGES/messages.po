@@ -293,6 +293,18 @@ msgstr "Reenviar els SMS al mòbil"
 msgid "Forward from"
 msgstr "Reenviar de"
 
+#, fuzzy
+msgid "Forward message to email"
+msgstr "Enviar PV al correu"
+
+#, fuzzy
+msgid "Forward message to inbox"
+msgstr "Enviar PV a l'entrada"
+
+#, fuzzy
+msgid "Forward message to mobile"
+msgstr "Enviar PV al mòbil"
+
 msgid "Forwarded email footer"
 msgstr "Firma del correu reenviat"
 
@@ -392,6 +404,10 @@ msgid "Maximum SMS count"
 msgstr "Nombre màxim de SMS"
 
 msgid "Message"
+msgstr "Missatge"
+
+#, fuzzy
+msgid "Message from"
 msgstr "Missatge"
 
 msgid "Message template"
@@ -592,10 +608,18 @@ msgstr "Seleccioni una acció"
 msgid "Selected incoming SMS has been deleted"
 msgstr "Els SMS entrants seleccionats han estat eliminats"
 
+#, fuzzy
+msgid "Selected incoming message has been deleted"
+msgstr "Els SMS entrants seleccionats han estat eliminats"
+
 msgid "Selected message template has been deleted"
 msgstr "La Plantilla de Missatge seleccionada ha estat eliminada"
 
 msgid "Selected outgoing SMS has been deleted"
+msgstr "Els SMS Enviats seleccionats han estat eliminats"
+
+#, fuzzy
+msgid "Selected outgoing message has been deleted"
 msgstr "Els SMS Enviats seleccionats han estat eliminats"
 
 msgid "Send"
@@ -612,6 +636,10 @@ msgstr "Enviar en Unicode"
 
 msgid "Send broadcast SMS"
 msgstr "Enviar SMS Massiu"
+
+#, fuzzy
+msgid "Send message"
+msgstr "Enviar en Unicode"
 
 msgid "Send to"
 msgstr "Enviar a "
@@ -787,6 +815,10 @@ msgstr "El vostre format de correu no és vàlid"
 
 msgid "Your message"
 msgstr "El seu missatge"
+
+#, fuzzy
+msgid "Your message has been delivered to queue"
+msgstr "El seu missatge ha estat enviat a la cua de processament"
 
 msgid "Your mobile format is invalid"
 msgstr "El format del mòbil no és vàlid"

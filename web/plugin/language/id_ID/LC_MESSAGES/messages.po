@@ -283,6 +283,18 @@ msgstr "Teruskan SMS ke ponsel"
 msgid "Forward from"
 msgstr "Teruskan dari"
 
+#, fuzzy
+msgid "Forward message to email"
+msgstr "Teruskan PV ke email"
+
+#, fuzzy
+msgid "Forward message to inbox"
+msgstr "Teruskan PV ke inbox"
+
+#, fuzzy
+msgid "Forward message to mobile"
+msgstr "Teruskan PV ke ponsel"
+
 msgid "Forwarded email footer"
 msgstr "Footer email"
 
@@ -382,6 +394,10 @@ msgid "Maximum SMS count"
 msgstr "Jumlah SMS maksimal"
 
 msgid "Message"
+msgstr "Pesan"
+
+#, fuzzy
+msgid "Message from"
 msgstr "Pesan"
 
 msgid "Message template"
@@ -579,10 +595,18 @@ msgstr "Pilih tindakan"
 msgid "Selected incoming SMS has been deleted"
 msgstr "SMS masuk telah dihapus"
 
+#, fuzzy
+msgid "Selected incoming message has been deleted"
+msgstr "SMS masuk telah dihapus"
+
 msgid "Selected message template has been deleted"
 msgstr "Pola pesan telah dihapus"
 
 msgid "Selected outgoing SMS has been deleted"
+msgstr "SMS keluar yang dipilih telah dihapus"
+
+#, fuzzy
+msgid "Selected outgoing message has been deleted"
 msgstr "SMS keluar yang dipilih telah dihapus"
 
 msgid "Send"
@@ -599,6 +623,10 @@ msgstr "Kirim sebagai pesan unicode"
 
 msgid "Send broadcast SMS"
 msgstr "Kirim banyak SMS"
+
+#, fuzzy
+msgid "Send message"
+msgstr "Pesan unicode"
 
 msgid "Send to"
 msgstr "Kirim ke"
@@ -770,6 +798,10 @@ msgstr "Formail email tidak valid"
 
 msgid "Your message"
 msgstr "Pesan anda"
+
+#, fuzzy
+msgid "Your message has been delivered to queue"
+msgstr "SMS anda telah dikirim ke antrian"
 
 msgid "Your mobile format is invalid"
 msgstr "Nomor anda tidak valid"

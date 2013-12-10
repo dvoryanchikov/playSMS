@@ -282,6 +282,18 @@ msgstr "Переадресация СМС на мобильный"
 msgid "Forward from"
 msgstr "Отправитель"
 
+#, fuzzy
+msgid "Forward message to email"
+msgstr "Переадресация ЛС на email"
+
+#, fuzzy
+msgid "Forward message to inbox"
+msgstr "Переадресация ЛС в Принятые"
+
+#, fuzzy
+msgid "Forward message to mobile"
+msgstr "Переадресация ЛС на мобильный"
+
 msgid "Forwarded email footer"
 msgstr "Подпись переадресованного сообщения"
 
@@ -379,6 +391,10 @@ msgid "Maximum SMS count"
 msgstr "Макс. СМС сегментов"
 
 msgid "Message"
+msgstr "Сообщение"
+
+#, fuzzy
+msgid "Message from"
 msgstr "Сообщение"
 
 msgid "Message template"
@@ -570,10 +586,18 @@ msgstr "Выберите действие"
 msgid "Selected incoming SMS has been deleted"
 msgstr "Выбранные принятые СМС удалены"
 
+#, fuzzy
+msgid "Selected incoming message has been deleted"
+msgstr "Выбранные принятые СМС удалены"
+
 msgid "Selected message template has been deleted"
 msgstr "Выбранные шаблоны удалены"
 
 msgid "Selected outgoing SMS has been deleted"
+msgstr "Выбранные исходящие СМС удалены"
+
+#, fuzzy
+msgid "Selected outgoing message has been deleted"
 msgstr "Выбранные исходящие СМС удалены"
 
 msgid "Send"
@@ -590,6 +614,10 @@ msgstr "Отправить в юникоде"
 
 msgid "Send broadcast SMS"
 msgstr "Рассылка"
+
+#, fuzzy
+msgid "Send message"
+msgstr "Содержит русские символы"
 
 msgid "Send to"
 msgstr "Кому"
@@ -755,6 +783,10 @@ msgstr "Неправильный формат email адреса"
 
 msgid "Your message"
 msgstr "Ваше сообщение"
+
+#, fuzzy
+msgid "Your message has been delivered to queue"
+msgstr "Сообщение успешно поставлено в очередь"
 
 msgid "Your mobile format is invalid"
 msgstr "Неправильный формат номера телефона"
