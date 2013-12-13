@@ -1,6 +1,6 @@
 <?php
 defined('_SECURE_') or die('Forbidden');
-if(!isadmin()){forcenoaccess();};
+if(!isadmin()){auth_block();};
 
 include $apps_path['plug']."/gateway/template/config.php";
 
@@ -24,6 +24,7 @@ switch ($op)
 	    <h2>"._('Manage template')."</h2>
 	    <p>
 	    <form action=index.php?app=menu&inc=gateway_template&op=manage_save method=post>
+	    "._CSRF_FORM_."
 	    <table class=playsms-table cellpadding=1 cellspacing=2 border=0>
 		<tr>
 		    <td class=label-sizer>"._('Gateway name')."</td><td>template $status_active</td>

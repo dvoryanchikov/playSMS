@@ -1,6 +1,6 @@
 <?php
 defined('_SECURE_') or die('Forbidden');
-if(!isadmin()){forcenoaccess();};
+if(!isadmin()){auth_block();};
 
 switch ($op) {
 	case "all_inbox":
@@ -18,7 +18,8 @@ switch ($op) {
 		$content = "
 			<h2>"._('All inbox')."</h2>
 			<p>".$search['form']."</p>
-			<form id=fm_all_inbox name=fm_all_inbox action=\"index.php?app=menu&inc=all_inbox&op=actions\" method=post>
+			<form id=fm_all_inbox name=fm_all_inbox action=\"index.php?app=menu&inc=all_inbox&op=actions\" method=POST>
+			"._CSRF_FORM_."
 			<input type=hidden name=go value=delete>
 			<div class=actions_box>
 				<div class=pull-left>

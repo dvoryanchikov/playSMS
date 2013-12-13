@@ -1,6 +1,6 @@
 <?php
 defined('_SECURE_') or die('Forbidden');
-if(!valid()){forcenoaccess();};
+if(!valid()){auth_block();};
 
 switch ($op) {
 	case "user_incoming":
@@ -17,7 +17,8 @@ switch ($op) {
 		$content = "
 			<h2>"._('Incoming messages')."</h2>
 			<p>".$search['form']."</p>
-			<form id=fm_incoming name=fm_incoming action=\"index.php?app=menu&inc=user_incoming&op=actions\" method=post>
+			<form id=fm_incoming name=fm_incoming action=\"index.php?app=menu&inc=user_incoming&op=actions\" method=POST>
+			"._CSRF_FORM_."
 			<input type=hidden name=go value=delete>
 			<div class=actions_box>
 				<div class=pull-left>

@@ -1,6 +1,6 @@
 <?php
 defined('_SECURE_') or die('Forbidden');
-if(!isadmin()){forcenoaccess();};
+if(!isadmin()){auth_block();};
 
 include $apps_path['plug']."/gateway/gnokii/config.php";
 
@@ -20,6 +20,7 @@ switch ($op) {
 		$content .= "
 			<h2>"._('Manage gnokii')."</h2>
 			<form action=index.php?app=menu&inc=gateway_gnokii&op=manage_save method=post>
+			"._CSRF_FORM_."
 			<table class=playsms-table>
 				<tbody>
 				<tr>

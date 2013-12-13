@@ -1,6 +1,7 @@
 {ERROR}
 <h2>{FORM_TITLE}</h2>
 <form action="index.php?app=menu&inc=user_pref&op=user_pref_save{URL_UNAME}" method=post enctype="multipart/form-data">
+{CSRF_FORM}
 <h3>{Login information}</h3>
 <table class=playsms-table>
 	<tbody>
@@ -22,7 +23,7 @@
 		</tr>
 		<tr>
 			<td>{Email}</td>
-			<td><input type=text size=30 maxlength=30 name=up_email value="{email}"></td>
+			<td><input type=text size=30 maxlength=250 name=up_email value="{email}"></td>
 		</tr>
 	</tbody>
 </table>

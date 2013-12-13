@@ -1,10 +1,10 @@
 <?php
 defined('_SECURE_') or die('Forbidden');
-if(!valid()){forcenoaccess();};
+if(!valid()){auth_block();};
 
 if ($poll_id = $_REQUEST['poll_id']) {
 	if (! ($poll_id = dba_valid(_DB_PREF_.'_featurePoll', 'poll_id', $poll_id))) {
-		forcenoaccess();
+		auth_block();
 	}
 }
 
@@ -96,6 +96,7 @@ switch ($op) {
 			<h2>"._('Manage poll')."</h2>
 			<h3>"._('Edit SMS poll')."</h3>
 			<form action=index.php?app=menu&inc=feature_sms_poll&op=sms_poll_edit_yes method=post>
+			"._CSRF_FORM_."
 			<input type=hidden name=poll_id value=\"$poll_id\">
 			<input type=hidden name=edit_poll_keyword value=\"$edit_poll_keyword\">
 			<table class=playsms-table>
@@ -147,6 +148,7 @@ switch ($op) {
 			<br />
 			<p>"._('Add choice to this poll')."
 			<form action=\"index.php?app=menu&inc=feature_sms_poll&op=sms_poll_choice_add\" method=post>
+			"._CSRF_FORM_."
 			<input type=hidden name=poll_id value=\"$poll_id\">
 			<table class=playsms-table cellpadding=1 cellspacing=2 border=0>
 			<tr>
@@ -252,6 +254,7 @@ switch ($op) {
 			<h2>"._('Manage poll')."</h2>
 			<h3>"._('Add SMS poll')."</h3>
 			<form action=\"index.php?app=menu&inc=feature_sms_poll&op=sms_poll_add_yes\" method=\"post\">
+			"._CSRF_FORM_."
 			<table class=playsms-table>
 			<tr>
 				<td class=label-sizer>"._('SMS poll keyword')."</td><td><input type=text size=10 maxlength=10 name=add_poll_keyword value=\"$add_poll_keyword\"></td>

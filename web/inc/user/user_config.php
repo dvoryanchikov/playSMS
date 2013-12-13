@@ -1,6 +1,6 @@
 <?php
 defined('_SECURE_') or die('Forbidden');
-if(!valid()){forcenoaccess();};
+if(!valid()){auth_block();};
 
 $c_username = $core_config['user']['username'];
 
@@ -155,7 +155,8 @@ switch ($op) {
 			$option_credit = "<tr><td>" . _('Credit') . "</td><td>$credit</td></tr>";
 		}
 		$content .= "
-			<form action=\"index.php?app=menu&inc=user_config&op=user_config_save" . $url_uname . "\" method=post enctype=\"multipart/form-data\">
+			<form action=\"index.php?app=menu&inc=user_config&op=user_config_save" . $url_uname . "\" method=POST enctype=\"multipart/form-data\">
+			"._CSRF_FORM_."
 			<h3>" . _('Application options') . "</h3>
 			<table class=playsms-table>
 			<tbody>

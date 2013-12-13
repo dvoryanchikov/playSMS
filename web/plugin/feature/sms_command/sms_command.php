@@ -2,14 +2,14 @@
 defined('_SECURE_') or die('Forbidden');
 
 if ($core_config['plugin']['sms_command']['allow_user_access']) {
-	if (!valid()) { forcenoaccess(); };
+	if (!valid()) { auth_block(); };
 } else {
-	if (!isadmin()) { forcenoaccess(); };
+	if (!isadmin()) { auth_block(); };
 }
 
 if ($command_id = $_REQUEST['command_id']) {
 	if (! ($command_id = dba_valid(_DB_PREF_.'_featureCommand', 'command_id', $command_id))) {
-		forcenoaccess();
+		auth_block();
 	}
 }
 
@@ -90,6 +90,7 @@ switch ($op) {
 			<h2>" . _('Manage command') . "</h2>
 			<h3>" . _('Edit SMS command') . "</h3>
 			<form action=index.php?app=menu&inc=feature_sms_command&op=sms_command_edit_yes method=post>
+			"._CSRF_FORM_."
 			<input type=hidden name=command_id value=$command_id>
 			<input type=hidden name=edit_command_keyword value=$edit_command_keyword>
 			<table class=playsms-table>
@@ -175,6 +176,7 @@ switch ($op) {
 			<h2>" . _('Manage command') . "</h2>
 			<h3>" . _('Add SMS command') . "</h3>
 			<form action=index.php?app=menu&inc=feature_sms_command&op=sms_command_add_yes method=post>
+			"._CSRF_FORM_."
 			<table class=playsms-table>
 				<tbody>
 				<tr>

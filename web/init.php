@@ -114,6 +114,40 @@ if (! get_magic_quotes_gpc()) {
 empty($_REQUEST);
 $_REQUEST = array_merge($_GET, $_POST);
 
+// global variables
+$app = q_sanitize($_REQUEST['app']);
+$inc = q_sanitize($_REQUEST['inc']);
+$op = q_sanitize($_REQUEST['op']);
+$route = q_sanitize($_REQUEST['route']);
+$page = q_sanitize($_REQUEST['page']);
+$nav = q_sanitize($_REQUEST['nav']);
+
+// global defines
+define('_APP_', $app);
+define('_INC_', $inc);
+define('_OP_', $op);
+define('_ROUTE_', $route);
+define('_PAGE_', $page);
+define('_NAV_', $nav);
+
+// enable anti-CSRF for anything but webservices
+$c_app = ( $_GET['app'] ? strtolower($_GET['app']) : strtolower($_POST['app']) );
+if (! (($c_app == 'ws') || ($c_app == 'webservices'))) {
+	$csrf = array();
+	// print_r($_POST); print_r($_SESSION);
+	if ($_POST) {
+		if (! core_csrf_validate()) {
+			logger_print("WARNING: possible CSRF attack. sid:".$_SESSION['sid']." ip:".$_SERVER['REMOTE_ADDR'], 2, "init");
+			auth_block();
+		}
+	}
+	$csrf = core_csrf_set();
+	define('_CSRF_TOKEN_', $csrf['value']);
+	define('_CSRF_FORM_', $csrf['form']);
+	unset($csrf);
+}
+unset($c_app);
+
 // plugins category
 $plugins_category = array('tools','feature','gateway','themes','language');
 $core_config['plugins_category'] = $plugins_category;
