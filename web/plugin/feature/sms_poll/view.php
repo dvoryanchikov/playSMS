@@ -1,6 +1,6 @@
 <?php
 defined('_SECURE_') or die('Forbidden');
-if(!valid()){auth_block();};
+if(!auth_isvalid()){auth_block();};
 
 $poll_id = $_REQUEST['poll_id'];
 
@@ -50,7 +50,7 @@ switch ($op) {
 		} else {
 			$content .= "<img src=\"".$output_graph."\">";
 		}
-		$content .= _b('index.php?app=menu&inc=feature_sms_poll&op=sms_poll_list');
+		$content .= _back('index.php?app=menu&inc=feature_sms_poll&op=sms_poll_list');
 		echo $content;
 		break;
 }

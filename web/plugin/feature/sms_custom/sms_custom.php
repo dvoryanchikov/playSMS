@@ -1,6 +1,6 @@
 <?php
 defined('_SECURE_') or die('Forbidden');
-if (!valid()) { auth_block(); };
+if (!auth_isvalid()) { auth_block(); };
 
 if ($custom_id = $_REQUEST['custom_id']) {
 	if (! ($custom_id = dba_valid(_DB_PREF_.'_featureCustom', 'custom_id', $custom_id))) {
@@ -16,7 +16,7 @@ switch ($op) {
 		$content .= "
 			<h2>" . _('Manage custom') . "</h2>
 			"._button('index.php?app=menu&inc=feature_sms_custom&op=sms_custom_add', _('Add SMS custom'));
-		if (! isadmin()) {
+		if (! auth_isadmin()) {
 			$query_user_only = "WHERE uid='$uid'";
 		}
 		$db_query = "SELECT * FROM " . _DB_PREF_ . "_featureCustom ".$query_user_only." ORDER BY custom_keyword";
@@ -24,7 +24,7 @@ switch ($op) {
 		$content .= "
 			<div class=table-responsive>
 			<table class=playsms-table-list>";
-		if (isadmin()) {
+		if (auth_isadmin()) {
 			$content .= "
 				<thead><tr>
 					<th width=20%>" . _('Keyword') . "</th>
@@ -43,11 +43,11 @@ switch ($op) {
 		$content .= "<tbody>";
 		$i = 0;
 		while ($db_row = dba_fetch_array($db_result)) {
-			if ($owner = uid2username($db_row['uid'])) {
+			if ($owner = user_uid2username($db_row['uid'])) {
 				$action = "<a href=index.php?app=menu&inc=feature_sms_custom&op=sms_custom_edit&custom_id=" . $db_row['custom_id'] . ">".$core_config['icon']['edit']."</a>&nbsp;";
 				$action .= "<a href=\"javascript: ConfirmURL('" . _('Are you sure you want to delete SMS custom ?') . " (" . _('keyword') . ": " . $db_row['custom_keyword'] . ")','index.php?app=menu&inc=feature_sms_custom&op=sms_custom_del&custom_id=" . $db_row['custom_id'] . "')\">".$core_config['icon']['delete']."</a>";
 				$custom_url = $db_row['custom_url'];
-				if (isadmin()) {
+				if (auth_isadmin()) {
 					$show_owner = "<td>".$owner."</td>";
 				}
 				$i++;
@@ -114,7 +114,7 @@ switch ($op) {
 			</table>
 			<p><input type=submit class=button value=\"" . _('Save') . "\">
 			</form>
-			"._b('index.php?app=menu&inc=feature_sms_custom&op=sms_custom_list');
+			"._back('index.php?app=menu&inc=feature_sms_custom&op=sms_custom_list');
 		echo $content;
 		break;
 	case "sms_custom_edit_yes":
@@ -188,7 +188,7 @@ switch ($op) {
 			</table>
 			<p><input type=submit class=button value=\"" . _('Save') . "\">
 			</form>
-			"._b('index.php?app=menu&inc=feature_sms_custom&op=sms_custom_list');
+			"._back('index.php?app=menu&inc=feature_sms_custom&op=sms_custom_list');
 		echo $content;
 		break;
 	case "sms_custom_add_yes":

@@ -46,7 +46,7 @@ function phonebook_hook_phonebook_number2name($mobile, $c_username='') {
 	$name = '';
 	if ($mobile) {
 		// if username supplied use it, else use global username
-		$c_uid = username2uid($c_username);
+		$c_uid = user_username2uid($c_username);
 		$uid = $c_uid ? $c_uid : $core_config['user']['uid'];
 		// remove +
 		$mobile = str_replace('+','',$mobile);
@@ -181,7 +181,7 @@ function phonebook_search_user($uid, $keyword="") {
 
 function phonebook_hook_webservices_output($ta,$requests) {
 	global $core_config;
-	if (! valid()) {
+	if (! auth_isvalid()) {
 		return FALSE;
 	}
 	$keyword = $requests['keyword'];

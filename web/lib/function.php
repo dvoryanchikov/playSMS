@@ -1,4 +1,22 @@
 <?php
+
+/**
+ * This file is part of playSMS.
+ *
+ * playSMS is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * playSMS is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with playSMS.  If not, see <http://www.gnu.org/licenses/>.
+ */
+
 defined('_SECURE_') or die('Forbidden');
 
 // main functions
@@ -15,7 +33,7 @@ include $apps_path['libs']."/fn_webservices.php";
 // init global variables
 
 // load user's data from user's DB table
-if (valid()) {
+if (auth_isvalid()) {
 	$username = $_SESSION['username'];
 	$core_config['user'] = user_getdatabyusername($username);;
 	$uid = $core_config['user']['uid'];
@@ -51,7 +69,7 @@ $menu_config[$menutab_my_account][] = array("index.php?app=menu&inc=user_inbox&o
 $menu_config[$menutab_my_account][] = array("index.php?app=menu&inc=user_incoming&op=user_incoming", _('Incoming messages'), 1);
 $menu_config[$menutab_my_account][] = array("index.php?app=menu&inc=user_outgoing&op=user_outgoing", _('Outgoing messages'), 1);
 
-if (isadmin()) {
+if (auth_isadmin()) {
 	// administrator menus
 	$menutab_administration = $core_config['menutab']['administration'];
 	$menu_config[$menutab_administration][] = array("index.php?app=menu&inc=all_inbox&op=all_inbox", _('All inbox'), 1);
@@ -201,5 +219,3 @@ $core_config['menu'] = $menu_config;
 //print_r($core_config); die();
 
 // end of global variables after plugins
-
-?>

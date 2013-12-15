@@ -1,4 +1,22 @@
 <?php
+
+/**
+ * This file is part of playSMS.
+ *
+ * playSMS is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * playSMS is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with playSMS.  If not, see <http://www.gnu.org/licenses/>.
+ */
+
 defined('_SECURE_') or die('Forbidden');
 
 // parameters
@@ -108,7 +126,7 @@ if ($ta) {
 			break;
 		case "GET_CONTACT":
 			if ($u = webservices_validate($h,$u)) {
-				$c_uid = username2uid($u);
+				$c_uid = user_username2uid($u);
 				list($ret,$json) = webservices_get_contact($c_uid, $kwd, $c);
 			} else {
 				$ret = "ERR 100";
@@ -118,7 +136,7 @@ if ($ta) {
 			break;
 		case "GET_CONTACT_GROUP":
 			if ($u = webservices_validate($h,$u)) {
-				$c_uid = username2uid($u);
+				$c_uid = user_username2uid($u);
 				list($ret,$json) = webservices_get_contact_group($c_uid, $kwd, $c);
 			} else {
 				$ret = "ERR 100";
@@ -127,7 +145,7 @@ if ($ta) {
 			}
 			break;
 		case "GET_TOKEN":
-			if (validatelogin($u,$p)) {
+			if (auth_validate_login($u,$p)) {
 				$user = user_getdatabyusername($u);
 				if ($user['uid']) {
 					$continue = false;
@@ -232,5 +250,3 @@ if ($format=='JSON') {
 }
 
 //logger_print("end u:".$u." h:".$h." ip:".$_SERVER['REMOTE_ADDR']." ta:".$ta, 3, "webservices");
-
-?>

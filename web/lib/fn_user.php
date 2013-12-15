@@ -1,4 +1,22 @@
 <?php
+
+/**
+ * This file is part of playSMS.
+ *
+ * playSMS is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * playSMS is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with playSMS.  If not, see <http://www.gnu.org/licenses/>.
+ */
+
 defined('_SECURE_') or die('Forbidden');
 
 function user_getallwithstatus($status) {
@@ -30,12 +48,12 @@ function user_getdatabyuid($uid) {
 }
 
 function user_getdatabyusername($username) {
-	$uid = username2uid($username);
+	$uid = user_username2uid($username);
 	return user_getdatabyuid($uid);
 }
 
 function user_getfieldbyuid($uid, $field) {
-	$field = q_sanitize($field);
+	$field = core_query_sanitize($field);
 	if ($uid && $field) {
 		$db_query = "SELECT $field FROM "._DB_PREF_."_tblUser WHERE uid='$uid'";
 		$db_result = dba_query($db_query);
@@ -47,7 +65,7 @@ function user_getfieldbyuid($uid, $field) {
 }
 
 function user_getfieldbyusername($username, $field) {
-	$uid = username2uid($username);
+	$uid = user_username2uid($username);
 	return user_getfieldbyuid($uid, $field);
 }
 
@@ -82,7 +100,7 @@ function user_add_validate($item) {
 				$ret['error_string'] = _('Your mobile format is invalid')." (".$item['mobile'].")";
 				$ret['status'] = false;
 			}
-			$c_uid = mobile2uid($item['mobile']);
+			$c_uid = user_mobile2uid($item['mobile']);
 			$c_user = dba_search(_DB_PREF_.'_tblUser', '*', array('uid' => $c_uid));
 			if ($c_user[0]['username'] && ($c_user[0]['username'] != $item['username'])) {
 				$ret['error_string'] = _('Mobile is already in use by other username') . " (" . _('mobile') . ": ".$item['mobile'].", " . _('username') . ": " . $c_user[0]['username'] . ") ";
@@ -93,7 +111,7 @@ function user_add_validate($item) {
 	return $ret;
 }
 
-function uid2username($uid) {
+function user_uid2username($uid) {
 	if ($uid) {
 		$db_query = "SELECT username FROM "._DB_PREF_."_tblUser WHERE uid='$uid'";
 		$db_result = dba_query($db_query);
@@ -103,7 +121,7 @@ function uid2username($uid) {
 	return $username;
 }
 
-function username2uid($username) {
+function user_username2uid($username) {
 	if ($username) {
 		$db_query = "SELECT uid FROM "._DB_PREF_."_tblUser WHERE username='$username'";
 		$db_result = dba_query($db_query);
@@ -113,7 +131,7 @@ function username2uid($username) {
 	return $uid;
 }
 
-function mobile2uid($mobile) {
+function user_mobile2uid($mobile) {
 	if ($mobile) {
 		// remove +
 		$mobile = str_replace('+','',$mobile);
@@ -126,5 +144,3 @@ function mobile2uid($mobile) {
 	}
 	return $uid;
 }
-
-?>

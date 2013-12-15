@@ -1,6 +1,6 @@
 <?php
 defined('_SECURE_') or die('Forbidden');
-if(!isadmin()){auth_block();};
+if(!auth_isadmin()){auth_block();};
 
 include $apps_path['plug']."/gateway/twilio/config.php";
 
@@ -39,7 +39,7 @@ switch ($op) {
 			- "._('Your callback URL should be accessible from twilio')."<br />
 			- "._('twilio will push DLR and incoming SMS to your callback URL')."<br />
 			- "._('twilio is a bulk SMS provider').", <a href=\"http://www.twilio.com\" target=\"_blank\">"._('free credits are available for testing purposes')."</a><br />";
-		$content .= _b('index.php?app=menu&inc=tools_gatewaymanager&op=gatewaymanager_list');
+		$content .= _back('index.php?app=menu&inc=tools_gatewaymanager&op=gatewaymanager_list');
 		echo $content;
 		break;
 	case "manage_save":

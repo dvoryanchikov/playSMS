@@ -1,10 +1,28 @@
 <?php
+
+/**
+ * This file is part of playSMS.
+ *
+ * playSMS is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * playSMS is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with playSMS.  If not, see <http://www.gnu.org/licenses/>.
+ */
+
 defined('_SECURE_') or die('Forbidden');
-if(!valid()){auth_block();};
+if(!auth_isvalid()){auth_block();};
 
 $c_username = $core_config['user']['username'];
 
-if (($uname = $_REQUEST['uname']) && isadmin()) {
+if (($uname = $_REQUEST['uname']) && auth_isadmin()) {
 	$c_username = trim($uname);
 	$url_uname = '&uname='.$c_username;
 }
@@ -145,11 +163,11 @@ switch ($op) {
 			}
 		}
 
-		if ($uname && isadmin()) {
+		if ($uname && auth_isadmin()) {
 			$content .= "<h2>" . _('Manage user') . "</h2>";
 			$option_credit = "<tr><td>" . _('Credit') . "</td><td><input type=text size=10 maxlength=10 name=up_credit value=\"$credit\"></td></tr>";
 			$button_delete = "<input type=button class=button value='". _('Delete') ."' onClick=\"javascript: ConfirmURL('" . _('Are you sure you want to delete user ?') . " (" . _('username') . ": " . $c_username . ")','index.php?app=menu&inc=user_mgmnt&op=user_del".$url_uname."')\">";
-			$button_back = _b('index.php?app=menu&inc=user_mgmnt&op='.$referrer);
+			$button_back = _back('index.php?app=menu&inc=user_mgmnt&op='.$referrer);
 		} else {
 			$content .= "<h2>" . _('User configuration') . "</h2>";
 			$option_credit = "<tr><td>" . _('Credit') . "</td><td>$credit</td></tr>";
@@ -196,7 +214,7 @@ switch ($op) {
 			'replace_zero', 'plus_sign_remove', 'plus_sign_add', 'send_as_unicode',
 			'new_token', 'enable_webservices', 'webservices_ip', 'sender'
 		);
-		if ($uname && isadmin()) {
+		if ($uname && auth_isadmin()) {
 			$fields[] = 'credit';
 		}
 		for ($i=0;$i<count($fields);$i++) {
@@ -235,4 +253,3 @@ switch ($op) {
 		exit();
 		break;
 }
-?>

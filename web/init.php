@@ -1,4 +1,22 @@
 <?php
+
+/**
+ * This file is part of playSMS.
+ *
+ * playSMS is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * playSMS is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with playSMS.  If not, see <http://www.gnu.org/licenses/>.
+ */
+
 include "config.php";
 
 // security, checked by essential files under subdir
@@ -115,12 +133,12 @@ empty($_REQUEST);
 $_REQUEST = array_merge($_GET, $_POST);
 
 // global variables
-$app = q_sanitize($_REQUEST['app']);
-$inc = q_sanitize($_REQUEST['inc']);
-$op = q_sanitize($_REQUEST['op']);
-$route = q_sanitize($_REQUEST['route']);
-$page = q_sanitize($_REQUEST['page']);
-$nav = q_sanitize($_REQUEST['nav']);
+$app = core_query_sanitize($_REQUEST['app']);
+$inc = core_query_sanitize($_REQUEST['inc']);
+$op = core_query_sanitize($_REQUEST['op']);
+$route = core_query_sanitize($_REQUEST['route']);
+$page = core_query_sanitize($_REQUEST['page']);
+$nav = core_query_sanitize($_REQUEST['nav']);
 
 // global defines
 define('_APP_', $app);
@@ -221,7 +239,7 @@ if (file_exists($fn1) && file_exists($fn2)) {
 	$core_config['module']['language'] = 'en_US';
 }
 
-if (valid()) {
+if (auth_isvalid()) {
 	setuserlang($_SESSION['username']);
 } else {
 	setuserlang();

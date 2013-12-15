@@ -1,6 +1,24 @@
 <?php
+
+/**
+ * This file is part of playSMS.
+ *
+ * playSMS is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * playSMS is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with playSMS.  If not, see <http://www.gnu.org/licenses/>.
+ */
+
 defined('_SECURE_') or die('Forbidden');
-if(!isadmin()){auth_block();};
+if(!auth_isadmin()){auth_block();};
 
 switch ($op) {
 	case "user_list":
@@ -124,7 +142,7 @@ switch ($op) {
 		break;
 	case "user_del":
 		$up['username'] = $_REQUEST['uname'];
-		$del_uid = username2uid($up['username']);
+		$del_uid = user_username2uid($up['username']);
 		$_SESSION['error_string'] = _('Fail to delete user') . " ".$up['username'];
 		if (($del_uid > 1) && ($del_uid != $uid)) {
 			$condition = array('uid' => $del_uid);
@@ -211,7 +229,7 @@ switch ($op) {
 		</table>
 		<input type='submit' class='button' value='" . _('Save') . "'>
 		</form>
-		<p>"._b('index.php?app=menu&inc=user_mgmnt&op=user_list');
+		<p>"._back('index.php?app=menu&inc=user_mgmnt&op=user_list');
 		echo $content;
 		break;
 	case "user_add_yes":
@@ -259,4 +277,3 @@ switch ($op) {
 		exit();
 		break;
 }
-?>

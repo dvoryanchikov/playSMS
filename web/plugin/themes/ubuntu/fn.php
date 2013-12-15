@@ -19,7 +19,7 @@ function ubuntu_hook_themes_apply($content) {
 			'Logout' => _('Logout')
 		),
 		'if' => array(
-			'valid' => valid()
+			'valid' => auth_isvalid()
 		)
 	);
 	$content = tpl_apply($tpl);
@@ -112,5 +112,3 @@ function ubuntu_hook_themes_navbar($num, $nav, $max_nav, $url, $page) {
 	}
 	return $nav_pages;
 }
-
-?>

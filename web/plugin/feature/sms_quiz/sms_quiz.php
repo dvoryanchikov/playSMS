@@ -1,6 +1,6 @@
 <?php
 defined('_SECURE_') or die('Forbidden');
-if (!valid()){auth_block();};
+if (!auth_isvalid()){auth_block();};
 
 if ($quiz_id = $_REQUEST['quiz_id']) {
 	if (! ($quiz_id = dba_valid(_DB_PREF_.'_featureQuiz', 'quiz_id', $quiz_id))) {
@@ -20,7 +20,7 @@ switch ($op) {
 			<div class=table-responsive>
 			<table class=playsms-table-list>
 			<thead><tr>";
-		if (isadmin()) {
+		if (auth_isadmin()) {
 			$content .= "
 				<th width=20%>"._('Keyword')."</th>
 				<th width=40%>"._('Question')."</th>
@@ -38,13 +38,13 @@ switch ($op) {
 			</thead></tr>
 			<tbody>";
 		$i = 0;
-		if (! isadmin()) {
+		if (! auth_isadmin()) {
 			$query_user_only = "WHERE uid='$uid'";
 		}
 		$db_query = "SELECT * FROM " . _DB_PREF_ . "_featureQuiz ".$query_user_only." ORDER BY quiz_id";
 		$db_result = dba_query($db_query);
 		while ($db_row = dba_fetch_array($db_result)) {
-			if ($owner = uid2username($db_row['uid'])) {
+			if ($owner = user_uid2username($db_row['uid'])) {
 				$quiz_status = "<a href=\"index.php?app=menu&inc=feature_sms_quiz&op=sms_quiz_status&quiz_id=".$db_row['quiz_id']."&ps=1\"><span class=status_disabled /></a>";
 				if ($db_row['quiz_enable']) {
 					$quiz_status = "<a href=\"index.php?app=menu&inc=feature_sms_quiz&op=sms_quiz_status&quiz_id=".$db_row['quiz_id']."&ps=0\"><span class=status_enabled /></a>";
@@ -52,7 +52,7 @@ switch ($op) {
 				$action = "<a href=index.php?app=menu&inc=feature_sms_quiz&op=sms_answer_view&quiz_id=".$db_row['quiz_id'].">".$core_config['icon']['view']."</a>&nbsp;";
 				$action .= "<a href=index.php?app=menu&inc=feature_sms_quiz&op=sms_quiz_edit&quiz_id=".$db_row['quiz_id'].">".$core_config['icon']['edit']."</a>&nbsp;";
 				$action .= "<a href=\"javascript: ConfirmURL('"._('Are you sure you want to delete SMS quiz with all its choices and answers ?')." ("._('keyword').": ".$db_row['quiz_keyword'].")','index.php?app=menu&inc=feature_sms_quiz&op=sms_quiz_del&quiz_id=".$db_row['quiz_id']."')\">".$core_config['icon']['delete']."</a>";
-				if (isadmin()) {
+				if (auth_isadmin()) {
 					$option_owner = "<td>$owner</td>";
 				}
 				$i++;
@@ -101,7 +101,7 @@ switch ($op) {
 			</table>
 			<p><input type=submit class=button value=\""._('Save')."\">
 			</form>
-			"._b('index.php?app=menu&inc=feature_sms_quiz&op=sms_quiz_list');
+			"._back('index.php?app=menu&inc=feature_sms_quiz&op=sms_quiz_list');
 		echo $content;
 		break;
 	case "sms_quiz_add_yes" :
@@ -167,7 +167,7 @@ switch ($op) {
 			</table>
 			<p><input type=submit class=button value=\""._('Save')."\">
 			</form>
-			"._b('index.php?app=menu&inc=feature_sms_quiz&op=sms_quiz_list');
+			"._back('index.php?app=menu&inc=feature_sms_quiz&op=sms_quiz_list');
 		echo $content;
 		break;
 	case "sms_quiz_edit_yes" :
@@ -236,7 +236,7 @@ switch ($op) {
 		$content .= "</tbody>
 			</table>
 			</div>
-			"._b('index.php?app=menu&inc=feature_sms_quiz&op=sms_quiz_list');
+			"._back('index.php?app=menu&inc=feature_sms_quiz&op=sms_quiz_list');
 		echo $content;
 		break;
 	case "sms_answer_del" :

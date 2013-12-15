@@ -1,6 +1,6 @@
 <?php
 defined('_SECURE_') or die('Forbidden');
-if(!valid()){auth_block();};
+if(!auth_isvalid()){auth_block();};
 
 switch ($op) {
 	case "list":
@@ -60,7 +60,7 @@ switch ($op) {
 			</table>
 			</div>
 			</form>
-			"._b('index.php?app=menu&inc=tools_phonebook&op=phonebook_list');
+			"._back('index.php?app=menu&inc=tools_phonebook&op=phonebook_list');
 
 		if ($err = $_SESSION['error_string']) {
 			echo "<div class=error_string>$err</div>";
@@ -88,7 +88,7 @@ switch ($op) {
 			</table>
 			<p><input type=submit class=button value=\""._('Save')."\"> 
 			</form>
-			<p>"._b('index.php?app=menu&inc=tools_phonebook&route=group&op=list');
+			<p>"._back('index.php?app=menu&inc=tools_phonebook&route=group&op=list');
 		echo $content;
 		break;
 	case "edit":
@@ -115,7 +115,7 @@ switch ($op) {
 			<p>"._('Note').": "._('Group code used by keyword')." BC ("._('broadcast SMS from single SMS').")
 			<p><input type=submit class=button value=\""._('Save')."\"> 
 			</form>
-			<p>"._b('index.php?app=menu&inc=tools_phonebook&route=group&op=list');
+			<p>"._back('index.php?app=menu&inc=tools_phonebook&route=group&op=list');
 		if ($err = $_SESSION['error_string']) {
 			echo "<div class=error_string>$err</div>";
 		}

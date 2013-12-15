@@ -1,6 +1,6 @@
 <?php defined('_SECURE_') or die('Forbidden'); ?>
 <?php
-if(!isadmin()){auth_block();};
+if(!auth_isadmin()){auth_block();};
 
 // error messages
 $error_content = '';
@@ -89,7 +89,7 @@ switch ($op) {
 				<input class='button' type='submit' value='"._('Delete member')."'>
 				</form>
 			</div>
-		"._b('index.php?app=menu&inc=feature_inboxgroup&op=list');
+		"._back('index.php?app=menu&inc=feature_inboxgroup&op=list');
 		echo $content;
 		break;
 	case 'members_add':
@@ -154,7 +154,7 @@ switch ($op) {
 			<p>"._('Press submit button to add selected users to member list')."</p>
 			<p><input class='button' type='submit' value='Submit' onClick=\"selectAllOptions(this.form['uids[]'])\"></p>
 			</form>
-		"._b('index.php?app=menu&inc=feature_inboxgroup&route=members&op=members&rid='.$rid);
+		"._back('index.php?app=menu&inc=feature_inboxgroup&route=members&op=members&rid='.$rid);
 		echo $content;
 		break;
 	case 'members_add_submit':
@@ -166,7 +166,7 @@ switch ($op) {
 			$uids = $_REQUEST['uids'];
 			for ($i=0;$i<count($uids);$i++) {
 				$c_uid = $uids[$i];
-				$c_username = uid2username($c_uid);
+				$c_username = user_uid2username($c_uid);
 				if (inboxgroup_membersadd($rid, $c_uid)) {
 					$_SESSION['error_string'] .= _('Member has been added')." ("._('Username').": ".$c_username.")<br />";
 				} else {
@@ -242,7 +242,7 @@ switch ($op) {
 			<p>"._('Press submit button to remove selected members from member list')."</p>
 			<p><input class='button' type='submit' value='Submit' onClick=\"selectAllOptions(this.form['uids[]'])\"></p>
 			</form>
-		"._b('index.php?app=menu&inc=feature_inboxgroup&route=members&op=members&rid='.$rid);
+		"._back('index.php?app=menu&inc=feature_inboxgroup&route=members&op=members&rid='.$rid);
 		echo $content;
 		break;
 	case 'members_delete_submit':
@@ -254,7 +254,7 @@ switch ($op) {
 			$uids = $_REQUEST['uids'];
 			for ($i=0;$i<count($uids);$i++) {
 				$c_uid = $uids[$i];
-				$c_username = uid2username($c_uid);
+				$c_username = user_uid2username($c_uid);
 				if (inboxgroup_membersdel($rid, $c_uid)) {
 					$_SESSION['error_string'] .= _('Member has been deleted')." ("._('Username').": ".$c_username.")<br />";
 				} else {

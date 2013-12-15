@@ -1,11 +1,11 @@
 <?php
 defined('_SECURE_') or die('Forbidden');
-if(!valid()){auth_block();};
+if(!auth_isvalid()){auth_block();};
 
 switch ($op) {
 	case 'list':
 		$content = '<h2>'._('Send from file').'</h2><p />';
-		if (isadmin()) {
+		if (auth_isadmin()) {
 			$info_format = _('format : destination number, message, username');
 		} else {
 			$info_format = _('format : destination number, message');
@@ -46,9 +46,9 @@ switch ($op) {
 					$row++;
 					$sms_to = trim($data[0]);
 					$sms_msg = trim($data[1]);
-					if (isadmin()) {
+					if (auth_isadmin()) {
 						$sms_username = trim($data[2]);
-						$uid = username2uid($sms_username);
+						$uid = user_username2uid($sms_username);
 					} else {
 						$sms_username = $core_config['user']['username'];
 						$uid = $core_config['user']['uid'];

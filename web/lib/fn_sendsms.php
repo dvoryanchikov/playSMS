@@ -1,4 +1,22 @@
 <?php
+
+/**
+ * This file is part of playSMS.
+ *
+ * playSMS is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * playSMS is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with playSMS.  If not, see <http://www.gnu.org/licenses/>.
+ */
+
 defined('_SECURE_') or die('Forbidden');
 
 function sendsms_getvalidnumber($number) {
@@ -38,7 +56,7 @@ function sendsms_intercept($sms_sender,$sms_footer,$sms_to,$sms_msg,$uid,$gpid=0
 	$ret_final = array();
 	// feature list
 	for ($c=0;$c<count($core_config['featurelist']);$c++) {
-		$ret = x_hook($core_config['featurelist'][$c],'sendsms_intercept',array($sms_sender,$sms_footer,$sms_to,$sms_msg,$uid,$gpid,$sms_type,$unicode));
+		$ret = core_hook($core_config['featurelist'][$c],'sendsms_intercept',array($sms_sender,$sms_footer,$sms_to,$sms_msg,$uid,$gpid,$sms_type,$unicode));
 		if ($ret['modified']) {
 			$sms_sender = ( $ret['param']['sms_sender'] ? $ret['param']['sms_sender'] : $sms_sender );
 			$sms_footer = ( $ret['param']['sms_footer'] ? $ret['param']['sms_footer'] : $sms_footer );
@@ -62,7 +80,7 @@ function sendsms_intercept($sms_sender,$sms_footer,$sms_to,$sms_msg,$uid,$gpid=0
 	}
 	// tools list
 	for ($c=0;$c<count($core_config['toolslist']);$c++) {
-		$ret = x_hook($core_config['toolslist'][$c],'sendsms_intercept',array($sms_sender,$sms_footer,$sms_to,$sms_msg,$uid,$gpid,$sms_type,$unicode));
+		$ret = core_hook($core_config['toolslist'][$c],'sendsms_intercept',array($sms_sender,$sms_footer,$sms_to,$sms_msg,$uid,$gpid,$sms_type,$unicode));
 		if ($ret['modified']) {
 			$sms_sender = ( $ret['param']['sms_sender'] ? $ret['param']['sms_sender'] : $sms_sender );
 			$sms_footer = ( $ret['param']['sms_footer'] ? $ret['param']['sms_footer'] : $sms_footer );
@@ -293,7 +311,7 @@ function sendsms_process($smslog_id,$sms_sender,$sms_footer,$sms_to,$sms_msg,$ui
 		logger_print("saved smslog_id:".$smslog_id." id:".$id, 2, "sendsms_process");
 		if ($p_status == 0) {
 			logger_print("final smslog_id:".$smslog_id." message:".$sms_msg.$sms_footer." len:".strlen($sms_msg.$sms_footer), 3, "sendsms");
-			if (x_hook($gw, 'sendsms', array($sms_sender,$sms_footer,$sms_to,$sms_msg,$uid,$gpid,$smslog_id,$sms_type,$unicode))) {
+			if (core_hook($gw, 'sendsms', array($sms_sender,$sms_footer,$sms_to,$sms_msg,$uid,$gpid,$smslog_id,$sms_type,$unicode))) {
 				// fixme anton - deduct user's credit as soon as gateway returns true
 				rate_deduct($smslog_id);
 				$ok = true;
@@ -542,7 +560,7 @@ function sendsms_get_template() {
 	global $core_config;
 	$templates = array();
 	for ($c=0;$c<count($core_config['toolslist']);$c++) {
-		if ($templates = x_hook($core_config['toolslist'][$c],'sendsms_get_template')) {
+		if ($templates = core_hook($core_config['toolslist'][$c],'sendsms_get_template')) {
 			break;
 		}
 	}
@@ -563,5 +581,3 @@ function sendsms_get_sms($smslog_id) {
 	}
 	return $data;
 }
-
-?>

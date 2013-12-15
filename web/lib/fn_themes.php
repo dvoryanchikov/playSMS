@@ -1,10 +1,28 @@
 <?php
+
+/**
+ * This file is part of playSMS.
+ *
+ * playSMS is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * playSMS is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with playSMS.  If not, see <http://www.gnu.org/licenses/>.
+ */
+
 defined('_SECURE_') or die('Forbidden');
 
 function themes_apply($content) {
 	$ret = '';
 	if (core_themes_get()) {
-		$ret = x_hook(core_themes_get(),'themes_apply',array($content));
+		$ret = core_hook(core_themes_get(),'themes_apply',array($content));
 	}
 	return $ret;
 }
@@ -23,7 +41,7 @@ function themes_buildmenu($menu_config) {
 	global $core_config;
 	$menu = '';
 	if ($core_config['module']['themes']) {
-		$menu = x_hook($core_config['module']['themes'],'themes_buildmenu',array($menu_config));
+		$menu = core_hook($core_config['module']['themes'],'themes_buildmenu',array($menu_config));
 	}
 	return $menu;
 }
@@ -39,7 +57,7 @@ function themes_navbar($num, $nav, $max_nav, $url, $page) {
 	$url = $url.$search_url;
 	$nav_pages = '';
 	if ($theme = core_themes_get()) {
-		$nav_pages = x_hook($theme,'themes_navbar',array($num, $nav, $max_nav, $url, $page));
+		$nav_pages = core_hook($theme,'themes_navbar',array($num, $nav, $max_nav, $url, $page));
 	}
 	return $nav_pages;
 }
@@ -114,45 +132,73 @@ function themes_button_back($url) {
 	return $content;
 }
 
-function _b($url) {
-	return themes_button_back($url);
+function themes_link($url, $title='', $css_class="", $css_id="") {
+	$ret = '';
+	if (core_themes_get()) {
+		$ret = core_hook(core_themes_get(),'themes_link',array($url, $title, $css_class, $css_id));
+	}
+	if (! $ret) {
+		$c_title = ( $title ? $title : $url );
+		$css_class = ( $css_class ? " class=\"".$css_class."\"" : '' );
+		$css_id = ( $css_id ? " id=\"".$css_id."\"" : '' );
+		$ret = "<a href=\"".$url."\"".$css_class.$css_id.">".$c_title."</a>";
+	}
+	return $ret;
 }
 
-function themes_link($url, $title='') {
-	$c_title = ( $title ? $title : $url );
-	$content = "<a href=\"".$url."\">".$c_title."</a>";
+function themes_button($url, $title, $css_class='', $css_id='') {
+	$ret = '';
+	if (core_themes_get()) {
+		$ret = core_hook(core_themes_get(),'themes_button',array($url, $title, $css_class, $css_id));
+	}
+	if (! $ret) {
+		$css_class = ( $css_class ? " ".$css_class : '' );
+		$css_id = ( $css_id ? " id=\"".$css_id."\"" : '' );
+		$ret = "<a href=# class=\"button".$css_class."\" ".$css_id."value=\"".$title."\" onClick=\"javascript:window.location.href='".$url."'\" />".$title."</a>";
+	}
+	return $ret;
+}
+
+function themes_hint($text) {
+	$ret = '';
+	if (core_themes_get()) {
+		$ret = core_hook(core_themes_get(),'themes_hint',array($text));
+	}
+	if (! $ret) {
+		$ret = "<i class='glyphicon glyphicon-info-sign playsms-tooltip' data-toggle=tooltip title='".$text."' rel=tooltip></i>";
+	}
 	return $content;
 }
+
+function themes_mandatory($text) {
+	$ret = '';
+	if (core_themes_get()) {
+		$ret = core_hook(core_themes_get(),'themes_mandatory',array($text));
+	}
+	if (! $ret) {
+		$ret = $text." <i class='glyphicon glyphicon-exclamation-sign playsms-mandatory' data-toggle=tooltip title='"._('This field is required')."' rel=tooltip></i>";
+	}
+	return $content;
+}
+
+/* define shortcuts */
 
 function _a($url, $title='') {
 	return themes_link($url, $title);
 }
 
-function themes_button($url, $title, $class='') {
-	$content = "<a href=# class=\"button $class\" value=\"".$title."\" onClick=\"javascript:window.location.href='".$url."'\" />".$title."</a>";
-	return $content;
+function _back($url) {
+	return themes_button_back($url);
 }
 
 function _button($url, $title) {
 	return themes_button($url, $title);
 }
 
-function themes_hint($text) {
-	$content = "<i class='glyphicon glyphicon-info-sign playsms-tooltip' data-toggle=tooltip title='".$text."' rel=tooltip></i>";
-	return $content;
-}
-
 function _hint($text) {
 	return themes_hint($text);
-}
-
-function themes_mandatory($text) {
-	$content = $text." <i class='glyphicon glyphicon-exclamation-sign playsms-mandatory' data-toggle=tooltip title='"._('This field is required')."' rel=tooltip></i>";
-	return $content;
 }
 
 function _mandatory($text) {
 	return themes_mandatory($text);
 }
-
-?>

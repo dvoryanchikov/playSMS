@@ -1,4 +1,22 @@
 <?php
+
+/**
+ * This file is part of playSMS.
+ *
+ * playSMS is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * playSMS is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with playSMS.  If not, see <http://www.gnu.org/licenses/>.
+ */
+
 defined('_SECURE_') or die('Forbidden');
 
 /**
@@ -12,8 +30,8 @@ defined('_SECURE_') or die('Forbidden');
 function webservices_validate($h,$u) {
 	global $core_config;
 	$ret = false;
-	if ($c_uid = validatetoken($h)) {
-		$c_u = uid2username($c_uid);
+	if ($c_uid = auth_validate_token($h)) {
+		$c_u = user_uid2username($c_uid);
 		if ($core_config['webservices_username']) {
 			if ($c_u && $u && ($c_u == $u)) {
 				$ret = $c_u;
@@ -85,7 +103,7 @@ function webservices_pv($c_username,$to,$msg,$type='text',$unicode=0,$nofooter=F
 }
 
 function webservices_bc($c_username,$c_gcode,$msg,$type='text',$unicode=0,$nofooter=FALSE,$footer='',$from='',$schedule) {
-	if (($c_uid = username2uid($c_username)) && $c_gcode && $msg) {
+	if (($c_uid = user_username2uid($c_username)) && $c_gcode && $msg) {
 		$c_gpid = phonebook_groupcode2id($c_uid,$c_gcode);
 		// sendsms_bc($c_username,$c_gpid,$message,$sms_type='text',$unicode=0)
 		list($ok,$to,$smslog_id,$queue_code) = sendsms_bc($c_username,$c_gpid,$msg,$type,$unicode,$nofooter,$footer,$from,$schedule);
@@ -111,7 +129,7 @@ function webservices_ds($c_username,$queue_code='',$src='',$dst='',$datetime='',
 	$ret = "ERR 101";
 	$json['status'] = 'ERR';
 	$json['error'] = '101';
-	if ($uid = username2uid($c_username)) {
+	if ($uid = user_username2uid($c_username)) {
 		$conditions['uid'] = $uid;
 	}
 	$conditions['flag_deleted'] = 0;
@@ -199,7 +217,7 @@ function webservices_in($c_username,$src='',$dst='',$kwd='',$datetime='',$c=100,
 	$json['status'] = 'ERR';
 	$json['error'] = '101';
 	$conditions = array('flag_deleted' => 0, 'in_status' => 1);
-	if ($uid = username2uid($c_username)) {
+	if ($uid = user_username2uid($c_username)) {
 		$conditions['in_uid'] = $uid;
 	}
 	if ($src) {
@@ -330,7 +348,7 @@ function webservices_ix($c_username,$src='',$dst='',$datetime='',$c=100,$last=fa
 	$json['status'] = 'ERR';
 	$json['error'] = '101';
 	$conditions['in_hidden'] = 0;
-	if ($uid = username2uid($c_username)) {
+	if ($uid = user_username2uid($c_username)) {
 		$conditions['in_uid'] = $uid;
 	}
 	if ($src) {
@@ -435,8 +453,6 @@ function webservices_get_contact_group($c_uid, $name, $count) {
 
 function webservices_output($ta,$requests) {
 	$ta = strtolower($ta);
-	$ret = x_hook($ta,'webservices_output',array($ta,$requests));
+	$ret = core_hook($ta,'webservices_output',array($ta,$requests));
 	return $ret;
 }
-
-?>

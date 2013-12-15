@@ -1,4 +1,22 @@
 <?php
+
+/**
+ * This file is part of playSMS.
+ *
+ * playSMS is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * playSMS is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with playSMS.  If not, see <http://www.gnu.org/licenses/>.
+ */
+
 defined('_SECURE_') or die('Forbidden');
 
 function dlr($smslog_id,$uid,$p_status) {
@@ -47,13 +65,13 @@ function setsmsdeliverystatus($smslog_id,$uid,$p_status) {
 		$ok = true;
 		if ($p_status > 0) {
 			for ($c=0;$c<count($core_config['toolslist']);$c++) {
-				x_hook($core_config['toolslist'][$c],'setsmsdeliverystatus',array($smslog_id,$uid,$p_status));
+				core_hook($core_config['toolslist'][$c],'setsmsdeliverystatus',array($smslog_id,$uid,$p_status));
 			}
 			for ($c=0;$c<count($core_config['featurelist']);$c++) {
-				x_hook($core_config['featurelist'][$c],'setsmsdeliverystatus',array($smslog_id,$uid,$p_status));
+				core_hook($core_config['featurelist'][$c],'setsmsdeliverystatus',array($smslog_id,$uid,$p_status));
 			}
 			$gw = core_gateway_get();
-			x_hook($gw,'setsmsdeliverystatus',array($smslog_id,$uid,$p_status));
+			core_hook($gw,'setsmsdeliverystatus',array($smslog_id,$uid,$p_status));
 		}
 	}
 	return $ok;
@@ -69,8 +87,6 @@ function getsmsstatus() {
 		$p_datetime = $db_row['p_datetime'];
 		$p_update = $db_row['p_update'];
 		$gpid = $db_row['p_gpid'];
-		x_hook($gw,'getsmsstatus',array($gpid,$uid,$smslog_id,$p_datetime,$p_update));
+		core_hook($gw,'getsmsstatus',array($gpid,$uid,$smslog_id,$p_datetime,$p_update));
 	}
 }
-
-?>

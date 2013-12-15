@@ -1,6 +1,6 @@
 <?php
 defined('_SECURE_') or die('Forbidden');
-if(!valid()) {auth_block();};
+if(!auth_isvalid()) {auth_block();};
 
 if ($subscribe_id = $_REQUEST['subscribe_id']) {
 	if (! ($subscribe_id = dba_valid(_DB_PREF_.'_featureSubscribe', 'subscribe_id', $subscribe_id))) {
@@ -20,7 +20,7 @@ switch ($op) {
 			<div class=table-responsive>
 			<table class=playsms-table-list>
 			<thead><tr>";
-		if (isadmin()) {
+		if (auth_isadmin()) {
 			$content .= "
 				<th width=20%>"._('Keyword')."</th>
 				<th width=20%>"._('Members')."</th>
@@ -40,13 +40,13 @@ switch ($op) {
 			</tr></thead>
 			<tbody>";
 		$i = 0;
-		if (! isadmin()) {
+		if (! auth_isadmin()) {
 			$query_user_only = "WHERE uid='$uid'";
 		}
 		$db_query = "SELECT * FROM " . _DB_PREF_ . "_featureSubscribe ".$query_user_only." ORDER BY subscribe_id";
 		$db_result = dba_query($db_query);
 		while ($db_row = dba_fetch_array($db_result)) {
-			if ($owner = uid2username($db_row['uid'])) {
+			if ($owner = user_uid2username($db_row['uid'])) {
 				$db_query = "SELECT * FROM " . _DB_PREF_ . "_featureSubscribe_member WHERE subscribe_id = '".$db_row['subscribe_id']."'";
 				$members = @dba_num_rows($db_query);
 				if (!$members) { $members = 0; }
@@ -59,7 +59,7 @@ switch ($op) {
 				}
 				$action = "<a href=index.php?app=menu&inc=feature_sms_subscribe&op=sms_subscribe_edit&subscribe_id=".$db_row['subscribe_id'].">".$core_config['icon']['edit']."</a>&nbsp;";
 				$action .= "<a href=\"javascript: ConfirmURL('"._('Are you sure you want to delete SMS subscribe ?')." ("._('keyword').": ".$db_row['subscribe_keyword'].")','index.php?app=menu&inc=feature_sms_subscribe&op=sms_subscribe_del&subscribe_id=".$db_row['subscribe_id']."')\">".$core_config['icon']['delete']."</a>";
-				if (isadmin()) {
+				if (auth_isadmin()) {
 					$option_owner = "<td>$owner</td>";
 				}
 				$i++;
@@ -190,7 +190,7 @@ switch ($op) {
 			</table>
 			<p><input type=submit class=button value=\""._('Save')."\">
 			</form>
-			"._b('index.php?app=menu&inc=feature_sms_subscribe&op=sms_subscribe_list');
+			"._back('index.php?app=menu&inc=feature_sms_subscribe&op=sms_subscribe_list');
 		echo $content;
 		break;
 	case "sms_subscribe_add_yes" :
@@ -338,7 +338,7 @@ switch ($op) {
 		</table>
 		<p><input type=submit class=button value=\""._('Save')."\">
 		</form>
-		"._b('index.php?app=menu&inc=feature_sms_subscribe&op=sms_subscribe_list');
+		"._back('index.php?app=menu&inc=feature_sms_subscribe&op=sms_subscribe_list');
 		echo $content;
 		break;
 	case "sms_subscribe_edit_yes" :
@@ -419,7 +419,7 @@ switch ($op) {
 			</tbody>
 			</table>
 			</div>
-			"._b('index.php?app=menu&inc=feature_sms_subscribe&op=sms_subscribe_list');
+			"._back('index.php?app=menu&inc=feature_sms_subscribe&op=sms_subscribe_list');
 		echo $content;
 		break;
 	case "mbr_del" :
@@ -472,7 +472,7 @@ switch ($op) {
 			</table>
 			</div>
 			"._button('index.php?app=menu&inc=feature_sms_subscribe&op=msg_add&&subscribe_id='.$subscribe_id, _('Add message'))."
-			"._b('index.php?app=menu&inc=feature_sms_subscribe&op=sms_subscribe_list');
+			"._back('index.php?app=menu&inc=feature_sms_subscribe&op=sms_subscribe_list');
 		echo $content;
 		break;
 	case "msg_edit" :
@@ -504,7 +504,7 @@ switch ($op) {
 			</table>
 			<input type=submit class=button value=\""._('Save')."\">
 			</form>
-			"._b('index.php?app=menu&inc=feature_sms_subscribe&op=msg_list&subscribe_id='.$subscribe_id);
+			"._back('index.php?app=menu&inc=feature_sms_subscribe&op=msg_list&subscribe_id='.$subscribe_id);
 		echo $content;
 		break;
 	case "msg_edit_yes" :
@@ -552,7 +552,7 @@ switch ($op) {
 			</table>
 			<p><input type=submit class=button value=\""._('Save')."\">
 			</form>
-			"._b('index.php?app=menu&inc=feature_sms_subscribe&op=msg_list&subscribe_id='.$subscribe_id);
+			"._back('index.php?app=menu&inc=feature_sms_subscribe&op=msg_list&subscribe_id='.$subscribe_id);
 		echo $content;
 		break;
 	case "msg_add_yes" :
@@ -614,7 +614,7 @@ switch ($op) {
 			<p>"._('Send this message to all members')."</p>
 			<p><input type=submit value=\""._('Send')."\" class=\"button\" />
 			</form>
-			"._b('index.php?app=menu&inc=feature_sms_subscribe&op=msg_list&subscribe_id='.$subscribe_id);
+			"._back('index.php?app=menu&inc=feature_sms_subscribe&op=msg_list&subscribe_id='.$subscribe_id);
 		echo $content;
 		break;
 	case "msg_send" :
@@ -622,7 +622,7 @@ switch ($op) {
 		$db_result = dba_query($db_query);
 		$db_row = dba_fetch_array($db_result);
 		$c_uid = $db_row['uid'];
-		$username = uid2username($c_uid);
+		$username = user_uid2username($c_uid);
 		$msg_id = $_POST['msg_id'];
 		$db_query = "SELECT msg FROM " . _DB_PREF_ . "_featureSubscribe_msg WHERE subscribe_id='$subscribe_id' AND msg_id='$msg_id'";
 		$db_result = dba_query($db_query);

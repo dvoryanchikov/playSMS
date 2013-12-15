@@ -1,7 +1,25 @@
 <?php
+
+/**
+ * This file is part of playSMS.
+ *
+ * playSMS is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * playSMS is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with playSMS.  If not, see <http://www.gnu.org/licenses/>.
+ */
+
 defined('_SECURE_') or die('Forbidden');
 
-function q_sanitize($var) {
+function core_query_sanitize($var) {
 	$var = str_replace("/","",$var);
 	$var = str_replace("|","",$var);
 	$var = str_replace("\\","",$var);
@@ -19,7 +37,7 @@ function core_sanitize_path($var) {
 	return $var;
 }
 
-function x_hook($c_plugin, $c_function, $c_param=array()) {
+function core_hook($c_plugin, $c_function, $c_param=array()) {
 	$c_fn = $c_plugin.'_hook_'.$c_function;
 	if ($c_plugin && $c_function && function_exists($c_fn)) {
 		return call_user_func_array($c_fn, $c_param);
@@ -47,14 +65,14 @@ function core_call_hook($function_name='', $arguments='') {
 	}
 	$found = FALSE;
 	for ($c=0;$c<count($core_config['toolslist']);$c++) {
-		if ($ret = x_hook($core_config['toolslist'][$c],$function_name,$arguments)) {
+		if ($ret = core_hook($core_config['toolslist'][$c],$function_name,$arguments)) {
 			$found = TRUE;
 			break;
 		}
 	}
 	if (! $found) {
 		for ($c=0;$c<count($core_config['featurelist']);$c++) {
-			if ($ret = x_hook($core_config['featurelist'][$c],$function_name,$arguments)) {
+			if ($ret = core_hook($core_config['featurelist'][$c],$function_name,$arguments)) {
 				break;
 			}
 		}
@@ -67,10 +85,10 @@ function playsmsd() {
 	core_call_hook();
 	// plugin gateway
 	$gw = core_gateway_get();
-	x_hook($gw,'playsmsd');
+	core_hook($gw,'playsmsd');
 }
 
-function str2hex($string)  {
+function core_str2hex($string)  {
 	$hex = '';
 	$len = strlen($string);
 	for ($i = 0; $i < $len; $i++) {
@@ -408,30 +426,6 @@ function core_object_to_array($data) {
 }
 
 /**
- * Read documents
- */
-function core_read_docs($base_dir, $doc) {
-	global $core_config;
-	$content = '';
-	$fn = $base_dir."/docs/".$doc;
-	if (file_exists($fn)) {
-		$fd = @fopen($fn, "r");
-		$fc = @fread($fd, filesize($fn));
-		@fclose($fd);
-		$fc = str_replace('{VERSION}', $core_config['version'], $fc);
-		$fi = pathinfo($fn);
-		if ($fi['extension'] == 'md') {
-			$content .= Parsedown::instance()->parse($fc);
-		} else if ($fi['extension'] == 'html') {
-			$content .= $fc;
-		} else {
-			$content .= '<pre>'.htmlentities($fc).'</pre>';
-		}
-	}
-	return $content;
-}
-
-/**
  * Convert array to CSV formatted string
  * @param array $item
  * @return string
@@ -614,4 +608,17 @@ function core_csrf_validate() {
 	} else {
 		return FALSE;
 	}
+}
+
+/**
+ * Get playSMS version
+ * @return string
+ */
+function core_get_version() {
+	$version = registry_search(1, 'core', 'config', 'playsms_version');
+	if ($version = $version['core']['config']['playsms_version']) {
+		return $version;
+	} else {
+		return '';
+	}	
 }
