@@ -1,0 +1,26 @@
+msgid "Action"
+msgstr ""
+
+msgid "Are you sure you want to delete queue"
+msgstr ""
+
+msgid "Count"
+msgstr ""
+
+msgid "Message"
+msgstr ""
+
+msgid "Queue Code"
+msgstr ""
+
+msgid "Queue has been removed"
+msgstr ""
+
+msgid "Scheduled"
+msgstr ""
+
+msgid "User"
+msgstr ""
+
+msgid "View SMS queue"
+msgstr ""

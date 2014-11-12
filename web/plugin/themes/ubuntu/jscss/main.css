@@ -1,11 +1,26 @@
 .navbar-right { float: right !important; }
 
-@media (max-width: 767px) {
-	input[size="30"], select, textarea {
-		width: 270px;
+@media (max-width: 768px) {
+	.playsms-responsive, input, select, option, textarea {
+		width: 335px;
 	}
 	.label-sizer {
-		width: 280px;
+		width: 345px;
+	}
+	.dropdown-menu hr {
+		display: none;
+	}
+}
+
+@media (max-width: 600px) {
+	.playsms-responsive, input, select, option, textarea {
+		width: 251px;
+	}
+	.label-sizer {
+		width: 261px;
+	}
+	.dropdown-menu hr {
+		display: none;
 	}
 	.navbar-right { float: left !important; }
 	.navbar-header:after { clear: none; }
@@ -16,12 +31,36 @@
 	.navbar-collapse.in > ul { border-top: none; }
 }
 
-@media (max-width: 383px) {
-	input[size="30"], select, textarea {
-		width: 130px;
+@media (max-width: 480px) {
+	.playsms-responsive, input, select, option, textarea {
+		width: 200px;
 	}
 	.label-sizer {
-		width: 140px;
+		width: 210px;
+	}
+	.dropdown-menu hr {
+		display: none;
+	}
+}
+
+@media (max-width: 320px) {
+	.playsms-responsive, input, select, option, textarea {
+		width: 120px;
+	}
+	.label-sizer {
+		width: 130px;
+	}
+	.dropdown-menu hr {
+		display: none;
+	}
+}
+
+@media (max-width: 240px) {
+	.playsms-responsive, input, select, option, textarea {
+		width: 75px;
+	}
+	.label-sizer {
+		width: 85px;
 	}
 	.dropdown-menu hr {
 		display: none;

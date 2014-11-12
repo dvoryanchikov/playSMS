@@ -1,14 +1,49 @@
 <?php
 defined('_SECURE_') or die('Forbidden');
 
+// default loaded page/plugin
+/*
+ * $themes_config['default']['main'] = array( 'default_inc' => 'feature_report', 'default_route' => 'user', 'default_op' => '', );
+ */
+
 // override common action icons
-//$core_config['plugin']['default']['icon']['edit']		= "<span class='playsms-icon glyphicon glyphicon-cog' alt='"._('Edit')."' title='"._('Edit')."'></span>";
-//$core_config['plugin']['default']['icon']['delete']		= "<span class='playsms-icon glyphicon glyphicon-trash' alt='"._('Delete')."' title='"._('Delete')."'></span>";
-//$core_config['plugin']['default']['icon']['view']		= "<span class='playsms-icon glyphicon glyphicon-eye-open' alt='"._('View')."' title='"._('View')."'></span>";
-//$core_config['plugin']['default']['icon']['manage']		= "<span class='playsms-icon glyphicon glyphicon-folder-open' alt='"._('Manage')."' title='"._('Manage')."'></span>";
-//$core_config['plugin']['default']['icon']['forward']		= "<span class='playsms-icon glyphicon glyphicon-new-window' alt='"._('Forward')."' title='"._('Forward')."'></span>";
-//$core_config['plugin']['default']['icon']['reply']		= "<span class='playsms-icon glyphicon glyphicon-log-out' alt='"._('Reply')."' title='"._('Reply')."'></span>";
-//$core_config['plugin']['default']['icon']['resend']		= "<span class='playsms-icon glyphicon glyphicon-log-in' alt='"._('Resend')."' title='"._('Resend')."'></span>";
-//$core_config['plugin']['default']['icon']['user_pref'] 	= "<span class='playsms-icon glyphicon glyphicon-user' alt='"._('User preference')."' title='"._('User preference')."'></span>";
-//$core_config['plugin']['default']['icon']['user_config'] 	= "<span class='playsms-icon glyphicon glyphicon-wrench' alt='"._('User configuration')."' title='"._('User configuration')."'></span>";
-//$core_config['plugin']['default']['icon']['user_delete'] 	= "<span class='playsms-icon glyphicon glyphicon-trash' alt='"._('Delete user')."' title='"._('Delete user')."'></span>";
+/*
+ * $themes_config['default']['icon'] = array( 'edit' => "<span class='playsms-icon glyphicon glyphicon-cog' alt='"._('Edit')."' title='"._('Edit')."'></span>", 'delete' => "<span class='playsms-icon glyphicon glyphicon-trash' alt='"._('Delete')."' title='"._('Delete')."'></span>", );
+ */
+
+// override menus
+/*
+$themes_config['default']['menu'] = array(
+	$core_config['menutab']['my_account'] => array(
+		array(
+			'index.php?app=main&inc=feature_report&route=user_inbox&op=user_inbox',
+			_('Inbox'),
+			1 
+		),
+		array(
+			'index.php?app=main&inc=core_sendsms&op=sendsms',
+			_('Send message'),
+			2 
+		),
+		array(
+			'index.php?app=main&inc=feature_report&route=user_outgoing&op=user_outgoing',
+			_('Outgoing messages'),
+			3 
+		),
+		array(
+			'index.php?app=main&inc=core_user&route=user_pref&op=user_pref',
+			_('Preferences'),
+			4 
+		) 
+	),
+	$core_config['menutab']['settings'] => array(),
+	$core_config['menutab']['features'] => array(),
+	$core_config['menutab']['reports'] => array(
+		array(
+			'index.php?app=main&inc=feature_report&route=credit&op=credit_list',
+			_('My credit transactions'),
+			1 
+		) 
+	) 
+);
+*/

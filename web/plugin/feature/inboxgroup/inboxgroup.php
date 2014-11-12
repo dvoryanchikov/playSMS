@@ -9,14 +9,14 @@ if ($err = $_SESSION['error_string']) {
 }
 
 // main
-switch ($op) {
+switch (_OP_) {
 	case 'list':
 		unset($tpl);
 		$tpl = array(
-			'var' => array(
+			'vars' => array(
 				'ERROR' => $error_content,
 				'Group inbox' => _('Group inbox'),
-				'Add group inbox' => _button('index.php?app=menu&inc=feature_inboxgroup&op=add', _('Add group inbox')),
+				'Add group inbox' => _button('index.php?app=main&inc=feature_inboxgroup&op=add', _('Add group inbox')),
 				'Receiver number' => _('Receiver number'),
 				'Keywords' => _('Keywords'),
 				'Members' => _('Members'),
@@ -29,13 +29,13 @@ switch ($op) {
 		for ($i=0;$i<count($data);$i++) {
 			$c_rid = $data[$i]['id'];
 			$c_members = count(inboxgroup_getmembers($c_rid));
-			$c_members = "<a href='index.php?app=menu&inc=feature_inboxgroup&route=members&op=members&rid=".$c_rid."'>".$c_members."</a>";
+			$c_members = "<a href='"._u('index.php?app=main&inc=feature_inboxgroup&route=members&op=members&rid='.$c_rid)."'>".$c_members."</a>";
 			$c_catchall = count(inboxgroup_getcatchall($c_rid));
-			$c_catchall = "<a href='index.php?app=menu&inc=feature_inboxgroup&route=catchall&op=catchall&rid=".$c_rid."'>".$c_catchall."</a>";
-			$c_status = $data[$i]['status'] ? "<a href='index.php?app=menu&inc=feature_inboxgroup&op=disable&rid=".$c_rid."'><span class=status_enabled /></a>" : "<a href='index.php?app=menu&inc=feature_inboxgroup&op=enable&rid=".$c_rid."'><span class=status_disabled /></a>";
-			$c_action = "<a href='index.php?app=menu&inc=feature_inboxgroup&op=edit&rid=".$c_rid."'>".$core_config['icon']['edit']."</a> ";
-			$c_action .= "<a href='index.php?app=menu&inc=feature_inboxgroup&op=del&rid=".$c_rid."'>".$core_config['icon']['delete']."</a> ";
-			$tpl['loop']['data'][] = array(
+			$c_catchall = "<a href='"._u('index.php?app=main&inc=feature_inboxgroup&route=catchall&op=catchall&rid='.$c_rid)."'>".$c_catchall."</a>";
+			$c_status = $data[$i]['status'] ? "<a href='"._u('index.php?app=main&inc=feature_inboxgroup&op=disable&rid='.$c_rid)."'><span class=status_enabled /></a>" : "<a href='"._u('index.php?app=main&inc=feature_inboxgroup&op=enable&rid='.$c_rid)."'><span class=status_disabled /></a>";
+			$c_action = "<a href='"._u('index.php?app=main&inc=feature_inboxgroup&op=edit&rid='.$c_rid)."'>".$icon_config['edit']."</a> ";
+			$c_action .= "<a href='"._u('index.php?app=main&inc=feature_inboxgroup&op=del&rid='.$c_rid)."'>".$icon_config['delete']."</a> ";
+			$tpl['loops']['data'][] = array(
 			    'tr_class' => $tr_class,
 			    'in_receiver' => $data[$i]['in_receiver'],
 			    'keywords' => str_replace(',',', ',$data[$i]['keywords']),
@@ -47,7 +47,7 @@ switch ($op) {
 		}
 		$tpl['name'] = 'inboxgroup_list';
 		$content = tpl_apply($tpl);
-		echo $content;
+		_p($content);
 		break;
 	case 'add':
 		if ($error_content) {
@@ -56,20 +56,20 @@ switch ($op) {
 		unset($tpl);
 		$tpl = array(
 		    'name' => 'inboxgroup_add',
-		    'var' => array(
+		    'vars' => array(
 			'ERROR' => $error_content,
 			'Group inbox' => _('Group inbox'),
 			'Add group inbox' => _('Add group inbox'),
 			'Receiver number' => _('Receiver number'),
 			'Keywords' => _('Keywords'),
 			'Description' => _('Description'),
-			'HINT_KEYWORDS' => _hint(_('Seperate with comma for multiple items')),
+			'HINT_KEYWORDS' => _hint(_('Separate with comma for multiple items')),
 			'HINT_RECEIVER_NUMBER' => _hint(_('For example a short code')),
 			'Save' => _('Save'),
-			'BACK' => _back('index.php?app=menu&inc=feature_inboxgroup&op=list')
+			'BACK' => _back('index.php?app=main&inc=feature_inboxgroup&op=list')
 		    )
 		);
-		echo tpl_apply($tpl);
+		_p(tpl_apply($tpl));
 		break;
 	case 'add_submit':
 		$in_receiver = $_REQUEST['in_receiver'];
@@ -84,7 +84,7 @@ switch ($op) {
 		} else {
 			$_SESSION['error_string'] = _('You must fill all fields');
 		}
-		header("Location: index.php?app=menu&inc=feature_inboxgroup&op=add");
+		header("Location: "._u('index.php?app=main&inc=feature_inboxgroup&op=add'));
 		exit();
 		break;
 	case 'edit':
@@ -102,7 +102,7 @@ switch ($op) {
 		unset($tpl);
 		$tpl = array(
 		    'name' => 'inboxgroup_edit',
-		    'var' => array(
+		    'vars' => array(
 			'ERROR' => $error_content,
 			'Group inbox' => _('Group inbox'),
 			'Edit group inbox' => _('Edit group inbox'),
@@ -115,13 +115,13 @@ switch ($op) {
 			'KEYWORDS' => $keywords,
 			'DESCRIPTION' => $description,
 			'OPTION_EXCLUSIVE' => $option_exclusive,
-			'HINT_KEYWORDS' => _hint(_('Seperate with comma for multiple items')),
+			'HINT_KEYWORDS' => _hint(_('Separate with comma for multiple items')),
 			'HINT_EXCLUSIVE' => _hint(_('Restrict sender to regular members or catch-all members only')),
 			'Save' => _('Save'),
-			'BACK' => _back('index.php?app=menu&inc=feature_inboxgroup&op=list')
+			'BACK' => _back('index.php?app=main&inc=feature_inboxgroup&op=list')
 		    )
 		);
-		echo tpl_apply($tpl);
+		_p(tpl_apply($tpl));
 		break;
 	case 'edit_submit':
 		$rid = $_REQUEST['rid'];
@@ -139,7 +139,7 @@ switch ($op) {
 		} else {
 			$_SESSION['error_string'] = _('You must fill all fields');
 		}
-		header("Location: index.php?app=menu&inc=feature_inboxgroup&op=edit&rid=".$rid);
+		header("Location: "._u('index.php?app=main&inc=feature_inboxgroup&op=edit&rid='.$rid));
 		exit();
 		break;
 	case 'del':
@@ -149,9 +149,9 @@ switch ($op) {
 		$keywords = $data['keywords'];
 		$description = $data['description'];
 		$c_members = count(inboxgroup_getmembers($rid));
-		$c_members = "<a href='index.php?app=menu&inc=feature_inboxgroup&route=members&op=members&rid=".$rid."'>".$c_members."</a>";
+		$c_members = "<a href='"._u('index.php?app=main&inc=feature_inboxgroup&route=members&op=members&rid='.$rid)."'>".$c_members."</a>";
 		$c_catchall = count(inboxgroup_getcatchall($rid));
-		$c_catchall = "<a href='index.php?app=menu&inc=feature_inboxgroup&route=catchall&op=catchall&rid=".$rid."'>".$c_catchall."</a>";
+		$c_catchall = "<a href='"._u('index.php?app=main&inc=feature_inboxgroup&route=catchall&op=catchall&rid='.$rid)."'>".$c_catchall."</a>";
 		$c_status = $data['status'] ? "<span class=status_enabled />" : "<span class=status_disabled />";
 		if ($error_content) {
 			$content .= $error_content;
@@ -159,7 +159,7 @@ switch ($op) {
 		unset($tpl);
 		$tpl = array(
 		    'name' => 'inboxgroup_del',
-		    'var' => array(
+		    'vars' => array(
 			'ERROR' => $error_content,
 			'Group inbox' => _('Group inbox'),
 			'Delete group inbox' => _('Delete group inbox'),
@@ -178,10 +178,10 @@ switch ($op) {
 			'C_STATUS' => $c_status,
 			'ARE_YOU_SURE' => _('Are you sure you want to delete this group inbox ?'),
 			'Yes' => _('Yes'),
-			'BACK' => _back('index.php?app=menu&inc=feature_inboxgroup&op=list')
+			'BACK' => _back('index.php?app=main&inc=feature_inboxgroup&op=list')
 		    )
 		);
-		echo tpl_apply($tpl);
+		_p(tpl_apply($tpl));
 		break;
 	case 'del_submit':
 		$rid = $_REQUEST['rid'];
@@ -194,9 +194,9 @@ switch ($op) {
 				$_SESSION['error_string'] = _('Fail to delete group inbox')." ("._('Number').": ".$in_receiver.")";
 			}
 		} else {
-			$_SESSION['error_string'] = _('Receiver number does not exists');
+			$_SESSION['error_string'] = _('Receiver number does not exist');
 		}
-		header("Location: index.php?app=menu&inc=feature_inboxgroup&op=list&rid=".$rid);
+		header("Location: "._u('index.php?app=main&inc=feature_inboxgroup&op=list&rid='.$rid));
 		exit();
 		break;
 	case 'enable':
@@ -210,9 +210,9 @@ switch ($op) {
 				$_SESSION['error_string'] = _('Fail to enable group inbox')." ("._('Number').": ".$in_receiver.")";
 			}
 		} else {
-			$_SESSION['error_string'] = _('Receiver number does not exists');
+			$_SESSION['error_string'] = _('Receiver number does not exist');
 		}
-		header("Location: index.php?app=menu&inc=feature_inboxgroup&op=list&rid=".$rid);
+		header("Location: "._u('index.php?app=main&inc=feature_inboxgroup&op=list&rid='.$rid));
 		exit();
 		break;
 	case 'disable':
@@ -226,9 +226,9 @@ switch ($op) {
 				$_SESSION['error_string'] = _('Fail to disable group inbox')." ("._('Number').": ".$in_receiver.")";
 			}
 		} else {
-			$_SESSION['error_string'] = _('Receiver number does not exists');
+			$_SESSION['error_string'] = _('Receiver number does not exist');
 		}
-		header("Location: index.php?app=menu&inc=feature_inboxgroup&op=list&rid=".$rid);
+		header("Location: "._u('index.php?app=main&inc=feature_inboxgroup&op=list&rid='.$rid));
 		exit();
 		break;
 }

@@ -9,7 +9,7 @@ if ($err = $_SESSION['error_string']) {
 }
 
 // main
-switch ($op) {
+switch (_OP_) {
 	case 'catchall':
 		$rid = $_REQUEST['rid'];
 		$data = inboxgroup_getdatabyid($rid);
@@ -17,9 +17,9 @@ switch ($op) {
 		$keywords = $data['keywords'];
 		$description = $data['description'];
 		$c_members = count(inboxgroup_getmembers($rid));
-		$c_members = "<a href='index.php?app=menu&inc=feature_inboxgroup&route=members&op=members&rid=".$rid."'>".$c_members."</a>";
+		$c_members = "<a href='"._u('index.php?app=main&inc=feature_inboxgroup&route=members&op=members&rid='.$rid)."'>".$c_members."</a>";
 		$c_catchall = count(inboxgroup_getcatchall($rid));
-		$c_catchall = "<a href='index.php?app=menu&inc=feature_inboxgroup&route=catchall&op=catchall&rid=".$rid."'>".$c_catchall."</a>";
+		$c_catchall = "<a href='"._u('index.php?app=main&inc=feature_inboxgroup&route=catchall&op=catchall&rid='.$rid)."'>".$c_catchall."</a>";
 		$c_status = $data['status'] ? "<span class=status_enabled />" : "<span class=status_disabled />";
 		if ($error_content) {
 			$content .= $error_content;
@@ -36,13 +36,13 @@ switch ($op) {
 			<tr><td>"._('Status')."</td><td>".$c_status."</td></tr>
 			</table>
 			<div style='float: left'>
-				<form method='post' action='index.php?app=menu&inc=feature_inboxgroup&route=catchall&op=catchall_add&rid=".$rid."'>
+				<form method='post' action='index.php?app=main&inc=feature_inboxgroup&route=catchall&op=catchall_add&rid=".$rid."'>
 				"._CSRF_FORM_."
 				<input class='button' type='submit' value='"._('Add catch-all')."'>
 				</form>
 			</div>
 			<div>
-				<form method='post' action='index.php?app=menu&inc=feature_inboxgroup&route=catchall&op=catchall_delete&rid=".$rid."'>
+				<form method='post' action='index.php?app=main&inc=feature_inboxgroup&route=catchall&op=catchall_delete&rid=".$rid."'>
 				"._CSRF_FORM_."
 				<input class='button' type='submit' value='"._('Delete catch-all')."'>
 				</form>
@@ -77,19 +77,19 @@ switch ($op) {
 			</table>
 			</div>
 			<div style='float: left'>
-				<form method='post' action='index.php?app=menu&inc=feature_inboxgroup&route=catchall&op=catchall_add&rid=".$rid."'>
+				<form method='post' action='index.php?app=main&inc=feature_inboxgroup&route=catchall&op=catchall_add&rid=".$rid."'>
 				"._CSRF_FORM_."
 				<input class='button' type='submit' value='"._('Add catch-all')."'>
 				</form>
 			</div>
 			<div>
-				<form method='post' action='index.php?app=menu&inc=feature_inboxgroup&route=catchall&op=catchall_delete&rid=".$rid."'>
+				<form method='post' action='index.php?app=main&inc=feature_inboxgroup&route=catchall&op=catchall_delete&rid=".$rid."'>
 				"._CSRF_FORM_."
 				<input class='button' type='submit' value='"._('Delete catch-all')."'>
 				</form>
 			</div>
-		"._back('index.php?app=menu&inc=feature_inboxgroup&op=list');
-		echo $content;
+		"._back('index.php?app=main&inc=feature_inboxgroup&op=list');
+		_p($content);
 		break;
 	case 'catchall_add':
 		$rid = $_REQUEST['rid'];
@@ -98,9 +98,9 @@ switch ($op) {
 		$keywords = $data['keywords'];
 		$description = $data['description'];
 		$c_members = count(inboxgroup_getmembers($rid));
-		$c_members = "<a href='index.php?app=menu&inc=feature_inboxgroup&route=members&op=members&rid=".$rid."'>".$c_members."</a>";
+		$c_members = "<a href='"._u('index.php?app=main&inc=feature_inboxgroup&route=members&op=members&rid='.$rid)."'>".$c_members."</a>";
 		$c_catchall = count(inboxgroup_getcatchall($rid));
-		$c_catchall = "<a href='index.php?app=menu&inc=feature_inboxgroup&route=catchall&op=catchall&rid=".$rid."'>".$c_catchall."</a>";
+		$c_catchall = "<a href='"._u('index.php?app=main&inc=feature_inboxgroup&route=catchall&op=catchall&rid='.$rid)."'>".$c_catchall."</a>";
 		$c_status = $data['status'] ? "<span class=status_enabled />" : "<span class=status_disabled />";
 		if ($error_content) {
 			$content .= $error_content;
@@ -122,13 +122,13 @@ switch ($op) {
 		for ($i=0;$i<count($users);$i++) {
 			$list_of_users .= "<option value='".$users[$i]['uid']."'>".$users[$i]['name']." ".$users[$i]['mobile']."</option>";
 		}
-		// get normal users
+		// get users
 		$users = user_getallwithstatus(3);
 		for ($i=0;$i<count($users);$i++) {
 			$list_of_users .= "<option value='".$users[$i]['uid']."'>".$users[$i]['name']." ".$users[$i]['mobile']."</option>";
 		}
 		$content .= "
-			<form action=\"index.php?app=menu&inc=feature_inboxgroup&route=catchall&op=catchall_add_submit\" method=\"post\">
+			<form action=\"index.php?app=main&inc=feature_inboxgroup&route=catchall&op=catchall_add_submit\" method=\"post\">
 			"._CSRF_FORM_."
 			<input type=hidden name='rid' value='".$rid."'>
 			<table>
@@ -153,8 +153,8 @@ switch ($op) {
 			<p>"._('Press submit button to add selected users to catch-all list')."</p>
 			<p><input class='button' type='submit' value='Submit' onClick=\"selectAllOptions(this.form['uids[]'])\"></p>
 			</form>
-		"._back('index.php?app=menu&inc=feature_inboxgroup&route=catchall&op=catchall&rid='.$rid);
-		echo $content;
+		"._back('index.php?app=main&inc=feature_inboxgroup&route=catchall&op=catchall&rid='.$rid);
+		_p($content);
 		break;
 	case 'catchall_add_submit':
 		$rid = $_REQUEST['rid'];
@@ -173,9 +173,9 @@ switch ($op) {
 				}
 			}
 		} else {
-			$_SESSION['error_string'] = _('Receiver number does not exists');
+			$_SESSION['error_string'] = _('Receiver number does not exist');
 		}
-		header("Location: index.php?app=menu&inc=feature_inboxgroup&route=catchall&op=catchall&rid=".$rid);
+		header("Location: "._u('index.php?app=main&inc=feature_inboxgroup&route=catchall&op=catchall&rid='.$rid));
 		exit();
 		break;
 	case 'catchall_delete':
@@ -185,9 +185,9 @@ switch ($op) {
 		$keywords = $data['keywords'];
 		$description = $data['description'];
 		$c_members = count(inboxgroup_getmembers($rid));
-		$c_members = "<a href='index.php?app=menu&inc=feature_inboxgroup&route=members&op=members&rid=".$rid."'>".$c_members."</a>";
+		$c_members = "<a href='"._u('index.php?app=main&inc=feature_inboxgroup&route=members&op=members&rid='.$rid)."'>".$c_members."</a>";
 		$c_catchall = count(inboxgroup_getcatchall($rid));
-		$c_catchall = "<a href='index.php?app=menu&inc=feature_inboxgroup&route=catchall&op=catchall&rid=".$rid."'>".$c_catchall."</a>";
+		$c_catchall = "<a href='"._u('index.php?app=main&inc=feature_inboxgroup&route=catchall&op=catchall&rid='.$rid)."'>".$c_catchall."</a>";
 		$c_status = $data['status'] ? "<span class=status_enabled />" : "<span class=status_disabled />";
 		if ($error_content) {
 			$content .= $error_content;
@@ -216,7 +216,7 @@ switch ($op) {
 			}
 		}
 		$content .= "
-			<form action=\"index.php?app=menu&inc=feature_inboxgroup&route=catchall&op=catchall_delete_submit\" method=\"post\">
+			<form action=\"index.php?app=main&inc=feature_inboxgroup&route=catchall&op=catchall_delete_submit\" method=\"post\">
 			"._CSRF_FORM_."
 			<input type=hidden name='rid' value='".$rid."'>
 			<table>
@@ -230,7 +230,7 @@ switch ($op) {
 						<br />
 						<p><input type=\"button\" class=\"button\" value=\"&gt;\" onclick=\"moveSelectedOptions(this.form['uids_dump[]'],this.form['uids[]'])\"></p>
 						<p><input type=\"button\" class=\"button\" value=\"&lt;\" onclick=\"moveSelectedOptions(this.form['uids[]'],this.form['uids_dump[]'])\"></p>
-					</td>		
+					</td>
 					<td nowrap>
 					    "._('Selected catchall').":<br>
 					    <select name=\"uids[]\" id=\"msg_combo_sendto\" size=\"10\" multiple=\"multiple\" onDblClick=\"moveSelectedOptions(this.form['uids[]'],this.form['uids_dump[]'])\"></select>
@@ -241,8 +241,8 @@ switch ($op) {
 			<p>"._('Press submit button to remove selected catchall from catch-all list')."</p>
 			<p><input class='button' type='submit' value='Submit' onClick=\"selectAllOptions(this.form['uids[]'])\"></p>
 			</form>
-		"._back('index.php?app=menu&inc=feature_inboxgroup&route=catchall&op=catchall&rid='.$rid);
-		echo $content;
+		"._back('index.php?app=main&inc=feature_inboxgroup&route=catchall&op=catchall&rid='.$rid);
+		_p($content);
 		break;
 	case 'catchall_delete_submit':
 		$rid = $_REQUEST['rid'];
@@ -261,9 +261,9 @@ switch ($op) {
 				}
 			}
 		} else {
-			$_SESSION['error_string'] = _('Receiver number does not exists');
+			$_SESSION['error_string'] = _('Receiver number does not exist');
 		}
-		header("Location: index.php?app=menu&inc=feature_inboxgroup&route=catchall&op=catchall&rid=".$rid);
+		header("Location: "._u('index.php?app=main&inc=feature_inboxgroup&route=catchall&op=catchall&rid='.$rid));
 		exit();
 		break;
 }

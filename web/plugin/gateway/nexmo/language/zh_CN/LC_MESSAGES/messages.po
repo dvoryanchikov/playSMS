@@ -17,9 +17,6 @@ msgstr ""
 msgid "Fill to change the API secret"
 msgstr ""
 
-msgid "Gateway has been activated"
-msgstr "网关已激活"
-
 msgid "Gateway module configurations has been saved"
 msgstr "网关模块的配置已保存"
 
@@ -47,7 +44,7 @@ msgstr ""
 msgid "Nexmo will push DLR and incoming SMS to your callback URL"
 msgstr ""
 
-msgid "No changes has been made"
+msgid "No changes have been made"
 msgstr "没有做出改变"
 
 msgid "Notes"

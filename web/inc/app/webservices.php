@@ -10,146 +10,428 @@
  *
  * playSMS is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with playSMS.  If not, see <http://www.gnu.org/licenses/>.
+ * along with playSMS. If not, see <http://www.gnu.org/licenses/>.
  */
-
 defined('_SECURE_') or die('Forbidden');
 
 // parameters
-$h		= trim($_REQUEST['h']);
-$u		= trim($_REQUEST['u']);
-$p		= trim($_REQUEST['p']);
-
-// type of action (ta) or operation (op), ta = op
-$ta		= trim(strtoupper($_REQUEST['ta']));
-$op		= trim(strtoupper($_REQUEST['op']));
+$h = trim($_REQUEST['h']);
+$u = trim($_REQUEST['u']);
+$p = trim($_REQUEST['p']);
 
 // output format
-$format		= trim(strtoupper($_REQUEST['format']));
+$format = strtoupper(trim($_REQUEST['format']));
 
-// PV, BC
-$from		= trim($_REQUEST['from']);
-$to		= trim(strtoupper($_REQUEST['to']));
-$msg		= trim($_REQUEST['msg']);
-$schedule	= trim($_REQUEST['schedule']);
-$footer		= trim($_REQUEST['footer']);
-$nofooter	= ( trim($_REQUEST['nofooter']) ? TRUE : FALSE );
-$type		= ( trim($_REQUEST['type']) ? trim($_REQUEST['type']) : 'text' );
-$unicode	= ( trim($_REQUEST['unicode']) ? trim($_REQUEST['unicode']) : 0 );
+// PV
+$to = trim($_REQUEST['to']);
+$schedule = trim($_REQUEST['schedule']);
+$footer = trim($_REQUEST['footer']);
+$nofooter = (trim($_REQUEST['nofooter']) ? TRUE : FALSE);
+$type = (trim($_REQUEST['type']) ? trim($_REQUEST['type']) : 'text');
+$unicode = (trim($_REQUEST['unicode']) ? trim($_REQUEST['unicode']) : 0);
+
+// PV, INJECT
+$from = trim($_REQUEST['from']);
+$msg = trim($_REQUEST['msg']);
+
+// INJECT
+$recvnum = trim($_REQUEST['recvnum']);
+$smsc = trim($_REQUEST['smsc']);
 
 // DS, IN, SX, IX, GET_CONTACT, GET_CONTACT_GROUP
-$src		= trim($_REQUEST['src']);
-$dst		= trim($_REQUEST['dst']);
-$dt		= trim($_REQUEST['dt']);
-$c		= trim($_REQUEST['c']);
-$last		= trim($_REQUEST['last']);
+$src = trim($_REQUEST['src']);
+$dst = trim($_REQUEST['dst']);
+$dt = trim($_REQUEST['dt']);
+$c = trim($_REQUEST['c']);
+$last = trim($_REQUEST['last']);
 
 // DS
-$queue		= trim($_REQUEST['queue']);
-$smslog_id	= trim($_REQUEST['smslog_id']);
+$queue = trim($_REQUEST['queue']);
+$smslog_id = trim($_REQUEST['smslog_id']);
 
 // IN, GET_CONTACT, GET_CONTACT_GROUP
-$kwd		= trim($_REQUEST['kwd']);
+$kwd = trim($_REQUEST['kwd']);
 
-if ($op) { $ta = $op; };
+$log_this = FALSE;
 
-//logger_print("begin u:".$u." h:".$h." ip:".$_SERVER['REMOTE_ADDR']." ta:".$ta, 3, "webservices");
+$ws_error_string = array(
+	'100' => 'authentication failed',
+	'101' => 'type of action is invalid or unknown',
+	'102' => 'one or more field empty',
+	'103' => 'not enough credit for this operation',
+	'104' => 'webservice token is not available',
+	'105' => 'webservice token not enable for this user',
+	'106' => 'webservice token not allowed from this IP address',
+	'200' => 'send message failed',
+	'201' => 'destination number or message is empty',
+	'400' => 'no delivery status available',
+	'401' => 'no delivery status retrieved and SMS still in queue',
+	'402' => 'no delivery status retrieved and SMS has been processed from queue',
+	'501' => 'no data returned or result is empty',
+	'600' => 'admin level authentication failed',
+	'601' => 'inject message failed',
+	'602' => 'sender id or message is empty',
+	'603' => 'account addition failed due to missing data',
+	'604' => 'fail to add account',
+	'605' => 'account removal failed due to unknown username',
+	'606' => 'fail to remove account',
+	'607' => 'set parent failed due to unknown username',
+	'608' => 'fail to set parent',
+	'609' => 'get parent failed due to unknown username',
+	'610' => 'fail to get parent',
+	'611' => 'account ban failed due to unknown username',
+	'612' => 'fail to ban account',
+	'613' => 'account unban failed due to unknown username',
+	'614' => 'fail to unban account',
+	'615' => 'editing account preferences failed due to missing data',
+	'616' => 'fail to edit account preferences',
+	'617' => 'editing account configuration failed due to missing data',
+	'618' => 'fail to edit account configuration',
+	'619' => 'viewing credit failed due to missing data',
+	'620' => 'fail to view credit',
+	'621' => 'adding credit failed due to missing data',
+	'622' => 'fail to add credit',
+	'623' => 'deducting credit failed due to missing data',
+	'624' => 'fail to deduct credit' 
+);
 
-if ($ta) {
-	switch ($ta) {
+if (_OP_) {
+	switch (strtoupper(_OP_)) {
+		
+		// ---------------------- ADMIN TASKS ---------------------- //
+		case "INJECT":
+			if ($u = webservices_validate_admin($h, $u)) {
+				$json = webservices_inject($u, $from, $msg, $recvnum, $smsc);
+			} else {
+				$json['status'] = 'ERR';
+				$json['error'] = '600';
+			}
+			$log_this = TRUE;
+			break;
+		
+		case "ACCOUNTADD":
+			if ($u = webservices_validate_admin($h, $u)) {
+				$data = array();
+				foreach ($_REQUEST as $key => $value) {
+					switch ($key) {
+						case 'data_status':
+						case 'data_parent':
+						case 'data_username':
+						case 'data_password':
+						case 'data_name':
+						case 'data_email':
+						case 'data_mobile':
+						case 'data_footer':
+						case 'data_datetime_timezone':
+						case 'data_language_module':
+							$key_name = str_replace('data_', '', $key);
+							$data[$key_name] = $value;
+							break;
+					}
+				}
+				if ($data['parent']) {
+					$data['parent_uid'] = (int) user_username2uid($data['parent']);
+					unset($data['parent']);
+				}
+				if ($data['status'] && $data['username'] && $data['password'] && $data['name'] && $data['email']) {
+					$json = webservices_account_add($data);
+				} else {
+					$json['status'] = 'ERR';
+					$json['error'] = '603';
+				}
+			} else {
+				$json['status'] = 'ERR';
+				$json['error'] = '600';
+			}
+			$log_this = TRUE;
+			break;
+		
+		case "ACCOUNTREMOVE":
+			if ($u = webservices_validate_admin($h, $u)) {
+				$data_uid = (int) user_username2uid($_REQUEST['data_username']);
+				if ($data_uid) {
+					$json = webservices_account_remove($data_uid);
+				} else {
+					$json['status'] = 'ERR';
+					$json['error'] = '605';
+				}
+			} else {
+				$json['status'] = 'ERR';
+				$json['error'] = '600';
+			}
+			$log_this = TRUE;
+			break;
+		
+		case "PARENTSET":
+			if ($u = webservices_validate_admin($h, $u)) {
+				$data_uid = (int) user_username2uid($_REQUEST['data_username']);
+				$data_parent_uid = (int) user_username2uid($_REQUEST['data_parent']);
+				if ($data_uid && $data_parent_uid) {
+					$json = webservices_parent_set($data_uid, $data_parent_uid);
+				} else {
+					$json['status'] = 'ERR';
+					$json['error'] = '607';
+				}
+			} else {
+				$json['status'] = 'ERR';
+				$json['error'] = '600';
+			}
+			$log_this = TRUE;
+			break;
+		
+		case "PARENTGET":
+			if ($u = webservices_validate_admin($h, $u)) {
+				$data_uid = (int) user_username2uid($_REQUEST['data_username']);
+				if ($data_uid) {
+					$json = webservices_parent_get($data_uid);
+				} else {
+					$json['status'] = 'ERR';
+					$json['error'] = '609';
+				}
+			} else {
+				$json['status'] = 'ERR';
+				$json['error'] = '600';
+			}
+			$log_this = TRUE;
+			break;
+		
+		case "ACCOUNTBAN":
+			if ($u = webservices_validate_admin($h, $u)) {
+				$data_uid = (int) user_username2uid($_REQUEST['data_username']);
+				if ($data_uid) {
+					$json = webservices_account_ban($data_uid);
+				} else {
+					$json['status'] = 'ERR';
+					$json['error'] = '611';
+				}
+			} else {
+				$json['status'] = 'ERR';
+				$json['error'] = '600';
+			}
+			$log_this = TRUE;
+			break;
+		
+		case "ACCOUNTUNBAN":
+			if ($u = webservices_validate_admin($h, $u)) {
+				$data_uid = (int) user_username2uid($_REQUEST['data_username']);
+				if ($data_uid) {
+					$json = webservices_account_unban($data_uid);
+				} else {
+					$json['status'] = 'ERR';
+					$json['error'] = '613';
+				}
+			} else {
+				$json['status'] = 'ERR';
+				$json['error'] = '600';
+			}
+			$log_this = TRUE;
+			break;
+		
+		case "ACCOUNTPREF":
+			if ($u = webservices_validate_admin($h, $u)) {
+				$data_uid = (int) user_username2uid($_REQUEST['data_username']);
+				$fields = array(
+					'name',
+					'email',
+					'mobile',
+					'address',
+					'city',
+					'state',
+					'country',
+					'password',
+					'zipcode' 
+				);
+				$data = array();
+				foreach ($fields as $field) {
+					if ($c_data = trim($_REQUEST['data_' . $field])) {
+						$data[$field] = $c_data;
+					}
+				}
+				if ($data_uid && count($data)) {
+					$json = webservices_account_pref($data_uid, $data);
+				} else {
+					$json['status'] = 'ERR';
+					$json['error'] = '615';
+				}
+			} else {
+				$json['status'] = 'ERR';
+				$json['error'] = '600';
+			}
+			$log_this = TRUE;
+			break;
+		
+		case "ACCOUNTCONF":
+			if ($u = webservices_validate_admin($h, $u)) {
+				$data_uid = (int) user_username2uid($_REQUEST['data_username']);
+				$fields = array(
+					'footer',
+					'datetime_timezone',
+					'language_module',
+					'fwd_to_inbox',
+					'fwd_to_email',
+					'fwd_to_mobile',
+					'local_length',
+					'replace_zero',
+					'sender' 
+				);
+				$data = array();
+				foreach ($fields as $field) {
+					if (strlen(trim($_REQUEST['data_' . $field]))) {
+						$data[$field] = trim($_REQUEST['data_' . $field]);
+					}
+				}
+				if ($data_uid && count($data)) {
+					$json = webservices_account_conf($data_uid, $data);
+				} else {
+					$json['status'] = 'ERR';
+					$json['error'] = '617';
+				}
+			} else {
+				$json['status'] = 'ERR';
+				$json['error'] = '600';
+			}
+			$log_this = TRUE;
+			break;
+		
+		case "CREDITVIEW":
+			if ($u = webservices_validate_admin($h, $u)) {
+				if ($data_username = $_REQUEST['data_username']) {
+					$json = webservices_credit_view($data_username);
+				} else {
+					$json['status'] = 'ERR';
+					$json['error'] = '619';
+				}
+			} else {
+				$json['status'] = 'ERR';
+				$json['error'] = '600';
+			}
+			$log_this = TRUE;
+			break;
+		
+		case "CREDITADD":
+			if ($u = webservices_validate_admin($h, $u)) {
+				if ($data_username = $_REQUEST['data_username']) {
+					$data_amount = (float) $_REQUEST['data_amount'];
+					$json = webservices_credit_add($data_username, $data_amount);
+				} else {
+					$json['status'] = 'ERR';
+					$json['error'] = '621';
+				}
+			} else {
+				$json['status'] = 'ERR';
+				$json['error'] = '600';
+			}
+			$log_this = TRUE;
+			break;
+		
+		case "CREDITDEDUCT":
+			if ($u = webservices_validate_admin($h, $u)) {
+				if ($data_username = $_REQUEST['data_username']) {
+					$data_amount = (float) $_REQUEST['data_amount'];
+					$json = webservices_credit_deduct($data_username, $data_amount);
+				} else {
+					$json['status'] = 'ERR';
+					$json['error'] = '623';
+				}
+			} else {
+				$json['status'] = 'ERR';
+				$json['error'] = '600';
+			}
+			$log_this = TRUE;
+			break;
+		
+		// ------------------- INDIVIDUAL TASKS ------------------- //
 		case "PV":
-			if ($u = webservices_validate($h,$u)) {
-				list($ret,$json) = webservices_pv($u,$to,$msg,$type,$unicode,$nofooter,$footer,$from,$schedule);
+			if ($u = webservices_validate($h, $u)) {
+				$json = webservices_pv($u, $to, $msg, $type, $unicode, $nofooter, $footer, $from, $schedule);
 			} else {
-				$ret = "ERR 100";
 				$json['status'] = 'ERR';
 				$json['error'] = '100';
 			}
+			$log_this = TRUE;
 			break;
-		case "BC":
-			if ($u = webservices_validate($h,$u)) {
-				list($ret,$json) = webservices_bc($u,$to,$msg,$type,$unicode,$nofooter,$footer,$from,$schedule);
-			} else {
-				$ret = "ERR 100";
-				$json['status'] = 'ERR';
-				$json['error'] = '100';
-			}
-			break;
+		
 		case "DS":
-			if ($u = webservices_validate($h,$u)) {
-				list($ret,$json) = webservices_ds($u,$queue,$src,$dst,$dt,$smslog_id,$c,$last);
+			if ($u = webservices_validate($h, $u)) {
+				$json = webservices_ds($u, $queue, $src, $dst, $dt, $smslog_id, $c, $last);
 			} else {
-				$ret = "ERR 100";
 				$json['status'] = 'ERR';
 				$json['error'] = '100';
 			}
+			$log_this = TRUE;
 			break;
+		
 		case "IN":
-			if ($u = webservices_validate($h,$u)) {
-				list($ret,$json) = webservices_in($u,$src,$dst,$kwd,$dt,$c,$last);
+			if ($u = webservices_validate($h, $u)) {
+				$json = webservices_in($u, $src, $dst, $kwd, $dt, $c, $last);
 			} else {
-				$ret = "ERR 100";
 				$json['status'] = 'ERR';
 				$json['error'] = '100';
 			}
+			$log_this = TRUE;
 			break;
+		
 		case "SX":
-			if ($u = webservices_validate($h,$u)) {
-				list($ret,$json) = webservices_sx($u,$src,$dst,$dt,$c,$last);
+			if ($u = webservices_validate($h, $u)) {
+				$json = webservices_sx($u, $src, $dst, $dt, $c, $last);
 			} else {
-				$ret = "ERR 100";
 				$json['status'] = 'ERR';
 				$json['error'] = '100';
 			}
+			$log_this = TRUE;
 			break;
+		
 		case "IX":
-			if ($u = webservices_validate($h,$u)) {
-				list($ret,$json) = webservices_ix($u,$src,$dst,$dt,$c,$last);
+			if ($u = webservices_validate($h, $u)) {
+				$json = webservices_ix($u, $src, $dst, $dt, $c, $last);
 			} else {
-				$ret = "ERR 100";
 				$json['status'] = 'ERR';
 				$json['error'] = '100';
 			}
+			$log_this = TRUE;
 			break;
+		
 		case "CR":
-			if ($u = webservices_validate($h,$u)) {
-				list($ret,$json) = webservices_cr($u);
+			if ($u = webservices_validate($h, $u)) {
+				$json = webservices_cr($u);
 			} else {
-				$ret = "ERR 100";
 				$json['status'] = 'ERR';
 				$json['error'] = '100';
 			}
+			$log_this = TRUE;
 			break;
+		
 		case "GET_CONTACT":
-			if ($u = webservices_validate($h,$u)) {
+			if ($u = webservices_validate($h, $u)) {
 				$c_uid = user_username2uid($u);
-				list($ret,$json) = webservices_get_contact($c_uid, $kwd, $c);
+				$json = webservices_get_contact($c_uid, $kwd, $c);
 			} else {
-				$ret = "ERR 100";
 				$json['status'] = 'ERR';
 				$json['error'] = '100';
 			}
+			$log_this = TRUE;
 			break;
+		
 		case "GET_CONTACT_GROUP":
-			if ($u = webservices_validate($h,$u)) {
+			if ($u = webservices_validate($h, $u)) {
 				$c_uid = user_username2uid($u);
-				list($ret,$json) = webservices_get_contact_group($c_uid, $kwd, $c);
+				$json = webservices_get_contact_group($c_uid, $kwd, $c);
 			} else {
-				$ret = "ERR 100";
 				$json['status'] = 'ERR';
 				$json['error'] = '100';
 			}
+			$log_this = TRUE;
 			break;
+		
 		case "GET_TOKEN":
-			if (auth_validate_login($u,$p)) {
+			if (auth_validate_login($u, $p)) {
 				$user = user_getdatabyusername($u);
 				if ($user['uid']) {
 					$continue = false;
-					$ret = "ERR 106";
 					$json['status'] = 'ERR';
 					$json['error'] = '106';
 					$ip = explode(',', $user['webservices_ip']);
@@ -165,88 +447,98 @@ if ($ta) {
 						if ($token = $user['token']) {
 							$continue = true;
 						} else {
-							$ret = "ERR 104";
 							$json['status'] = 'ERR';
 							$json['error'] = '104';
 						}
 					}
 					if ($continue) {
 						if ($user['enable_webservices']) {
-							$ret = "OK ".$token;
 							$json['status'] = 'OK';
 							$json['error'] = '0';
 							$json['token'] = $token;
 						} else {
-							$ret = "ERR 105";
 							$json['status'] = 'ERR';
 							$json['error'] = '105';
 						}
 					}
 				} else {
-					$ret = "ERR 100";
 					$json['status'] = 'ERR';
 					$json['error'] = '100';
 				}
 			} else {
-				$ret = "ERR 100";
 				$json['status'] = 'ERR';
 				$json['error'] = '100';
 			}
+			$log_this = TRUE;
 			break;
+		
 		case "SET_TOKEN":
-			if ($u = webservices_validate($h,$u)) {
+			if ($u = webservices_validate($h, $u)) {
 				$user = user_getdatabyusername($u);
-				if ($uid = $user['uid']) {
-					$token = md5($uid._PID_);
-					$items = array('token' => $token);
-					$conditions = array('uid' => $uid);
-					if (dba_update(_DB_PREF_.'_tblUser', $items, $conditions)) {
-						$ret = "OK ".$token;
+				if ($c_uid = $user['uid']) {
+					$token = md5($c_uid . _PID_);
+					$items = array(
+						'token' => $token 
+					);
+					$conditions = array(
+						'uid' => $c_uid 
+					);
+					if (dba_update(_DB_PREF_ . '_tblUser', $items, $conditions)) {
 						$json['status'] = 'OK';
 						$json['error'] = '0';
 						$json['token'] = $token;
 					} else {
-						$ret = "ERR 100";
 						$json['status'] = 'ERR';
 						$json['error'] = '100';
 					}
 				} else {
-					$ret = "ERR 100";
 					$json['status'] = 'ERR';
 					$json['error'] = '100';
 				}
 			} else {
-				$ret = "ERR 100";
 				$json['status'] = 'ERR';
 				$json['error'] = '100';
 			}
+			$log_this = TRUE;
 			break;
-		default:
-			if ($ta) {
+		
+		default :
+			if (_OP_) {
+				
 				// output do not require valid login
-				$ret = webservices_output($ta,$_REQUEST);
-				echo $ret;
+				$ret = webservices_output(_OP_, $_REQUEST);
+				_p($ret);
 				exit();
 			} else {
+				
 				// default error return
-				$ret = "ERR 102";
 				$json['status'] = 'ERR';
 				$json['error'] = '102';
 			}
 	}
 }
 
-if ($format=='JSON') {
-	echo json_encode($json);
-} else if ($format=='SERIALIZE') {
-	echo serialize($json);
-} else if ($format=='XML') {
+// add an error_string to json response
+$json['error_string'] = $ws_error_string[$json['error']];
+
+// add timestamp
+$json['timestamp'] = mktime();
+
+if ($log_this) {
+	logger_print("u:" . $u . " ip:" . $_SERVER['REMOTE_ADDR'] . " op:" . _OP_ . ' timestamp:' . $json['timestamp'] . ' error_string:' . $json['error_string'], 3, "webservices");
+}
+
+if ($format == 'SERIALIZE') {
+	ob_end_clean();
+	header('Content-Type: text/plain');
+	_p(serialize($json));
+} else if ($format == 'XML') {
 	$xml = core_array_to_xml($json, new SimpleXMLElement('<response/>'));
 	ob_end_clean();
 	header('Content-Type: text/xml');
-	echo $xml->asXML();
-} else if ($format=='' || $format=='PLAIN') {
-	echo $ret;
+	_p($xml->asXML());
+} else {
+	ob_end_clean();
+	header('Content-Type: application/json');
+	_p(json_encode($json));
 }
-
-//logger_print("end u:".$u." h:".$h." ip:".$_SERVER['REMOTE_ADDR']." ta:".$ta, 3, "webservices");

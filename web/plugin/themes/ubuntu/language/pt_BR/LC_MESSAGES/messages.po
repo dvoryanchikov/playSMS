@@ -5,44 +5,17 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-msgid "Email"
-msgstr "E-mail"
-
-msgid "Forgot password"
-msgstr "Recuperar Senha"
-
 msgid "Home"
 msgstr "Inicio"
 
-msgid "Login"
-msgstr "Logar"
+msgid "Logged in as"
+msgstr ""
 
 msgid "Logout"
 msgstr "Sair"
 
-msgid "Mobile"
-msgstr "Celular"
-
-msgid "Name"
-msgstr "Nome"
-
-msgid "Password"
-msgstr "Senha"
-
-msgid "Preferences"
+msgid "Your credit"
 msgstr ""
 
-msgid "Recover password"
-msgstr "Recuperar senha"
-
-msgid "Register an account"
-msgstr "Registrar uma conta"
-
-msgid "Submit"
+msgid "return"
 msgstr ""
-
-msgid "User configuration"
-msgstr ""
-
-msgid "Username"
-msgstr "Usuário"

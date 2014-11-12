@@ -1,0 +1,33 @@
+msgid ""
+msgstr ""
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2014-03-19 17:59+0700\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+msgid "Action"
+msgstr "Action"
+
+msgid "Are you sure you want to delete queue"
+msgstr "Êtes-vous sûr de vouloir supprimer la file d'attente"
+
+msgid "Count"
+msgstr "Quantité"
+
+msgid "Message"
+msgstr "Message"
+
+msgid "Queue Code"
+msgstr "Code de file d'attente"
+
+msgid "Queue has been removed"
+msgstr "La file d'attente a été supprimée"
+
+msgid "Scheduled"
+msgstr "Planifié"
+
+msgid "User"
+msgstr "Utilisateur"
+
+msgid "View SMS queue"
+msgstr "Afficher la file d'attente des SMS"

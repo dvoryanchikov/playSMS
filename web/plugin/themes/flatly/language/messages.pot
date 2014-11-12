@@ -1,41 +1,14 @@
-msgid "Email"
-msgstr ""
-
-msgid "Forgot password"
-msgstr ""
-
 msgid "Home"
 msgstr ""
 
-msgid "Login"
+msgid "Logged in as"
 msgstr ""
 
 msgid "Logout"
 msgstr ""
 
-msgid "Mobile"
+msgid "Your credit"
 msgstr ""
 
-msgid "Name"
-msgstr ""
-
-msgid "Password"
-msgstr ""
-
-msgid "Preferences"
-msgstr ""
-
-msgid "Recover password"
-msgstr ""
-
-msgid "Register an account"
-msgstr ""
-
-msgid "Submit"
-msgstr ""
-
-msgid "User configuration"
-msgstr ""
-
-msgid "Username"
+msgid "return"
 msgstr ""

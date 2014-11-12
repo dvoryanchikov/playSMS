@@ -5,307 +5,59 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-msgid "About"
-msgstr "Tentang"
-
-msgid "About playSMS"
-msgstr "Tentang playSMS"
-
-msgid "Action"
-msgstr "Tindakan"
-
-msgid "Active gateway module"
-msgstr "Modul gateway yang aktif"
-
-msgid "Active language"
-msgstr "Bahasa yang aktif"
-
-msgid "Active themes"
-msgstr "Tema yang aktif"
-
 msgid "Add"
 msgstr "Tambah"
-
-msgid "Add message template"
-msgstr "Tambah pola pesan"
-
-msgid "Add user"
-msgstr "Tambah pengguna"
-
-msgid "Address"
-msgstr "Alamat"
-
-msgid "Administration"
-msgstr "Administrator"
 
 msgid "Administrator"
 msgstr "Administrator"
 
-msgid "All"
-msgstr "Semua"
+msgid "Ban"
+msgstr ""
 
-msgid "All Inbox"
-msgstr "Semua kotak masuk"
-
-msgid "All inbox"
-msgstr "Semua kotak masuk"
-
-msgid "All incoming SMS"
-msgstr "Semua SMS masuk"
-
-#, fuzzy
-msgid "All incoming messages"
-msgstr "Semua SMS masuk"
-
-msgid "All outgoing SMS"
-msgstr "Semua SMS keluar"
-
-#, fuzzy
-msgid "All outgoing messages"
-msgstr "Semua SMS keluar"
-
-#, fuzzy
-msgid "Allow custom SMS footer"
-msgstr "Catatan kaki SMS"
-
-#, fuzzy
-msgid "Allow custom sender ID"
-msgstr "ID default pengirim"
-
-msgid "Always add plus sign"
-msgstr "Selalu menambahkan tanda plus"
-
-msgid "Always choose to send as unicode"
-msgstr "Selalu pilih mengirim sebagai unicode"
-
-msgid "Application information"
-msgstr "Informasi aplikasi"
-
-msgid "Application options"
-msgstr "Opsi aplikasi"
-
-msgid "Are you sure you want to delete outgoing SMS ?"
-msgstr "Anda yakin ingin menghapus SMS keluar ?"
-
-#, fuzzy
-msgid "Are you sure you want to delete these items ?"
-msgstr "Anda yakin ingin menghapus SMS ini ?"
-
-msgid "Are you sure you want to delete this SMS ?"
-msgstr "Anda yakin ingin menghapus SMS ini ?"
-
-msgid "Are you sure you want to delete user"
-msgstr "Anda yakin ingin menghapus pengguna"
-
-msgid "Are you sure you want to delete user ?"
-msgstr "Anda yakin ingin menghapus pengguna ?"
-
-msgid "Auto remove plus sign"
-msgstr "Otomatis menghapus tanda plus"
-
-msgid "Auto replace prefix 0"
-msgstr "Otomatis mengganti kode awal dengan 0"
-
-msgid "Back"
-msgstr "Kembali"
-
-msgid "Changelog"
-msgstr "Catatan perubahan"
-
-msgid "City"
-msgstr "Kota"
-
-msgid "Comma seperated"
-msgstr "Dipisahkan koma"
-
-msgid "Content"
-msgstr "Isi"
-
-msgid "Country"
-msgstr "Negara"
-
-msgid "Created"
-msgstr "Dibuat"
-
-msgid "Credit"
-msgstr "Pulsa"
-
-msgid "Currently logged in user is immune to deletion"
-msgstr "Pengguna saat ini kebal untuk dihapus"
-
-msgid "Date time"
-msgstr "Waktu & tanggal"
-
-msgid "Default"
-msgstr "Default"
-
-msgid "Default SMS rate"
-msgstr "Tarif standar SMS"
-
-msgid "Default credit for user"
-msgstr "Pulsa default untuk pengguna"
-
-msgid "Default language"
-msgstr "Bahasa default"
-
-msgid "Default sender ID"
-msgstr "ID default pengirim"
-
-msgid "Default timezone"
-msgstr "Zona waktu default"
+msgid "Buy"
+msgstr ""
 
 msgid "Delete"
 msgstr "Hapus"
-
-msgid "Delete all templates ?"
-msgstr "Hapus semua pola?"
-
-msgid "Delete message template"
-msgstr "Hapus pola pesan"
-
-msgid "Delete selection"
-msgstr "Hapus pilihan"
 
 #, fuzzy
 msgid "Delete user"
 msgstr "Hapus"
 
-msgid "Delivered"
-msgstr "Diterima"
-
 msgid "Edit"
 msgstr "Sunting"
-
-msgid "Edit message template"
-msgstr "Ubah pola pesan"
-
-#, fuzzy
-msgid "Effective SMS sender ID"
-msgstr "ID pengirim SMS"
-
-msgid "Eg: +0700 for Jakarta/Bangkok timezone"
-msgstr "Misalnya: +0700 untuk zona waktu Jakarta/Bangkok"
-
-msgid "Email"
-msgstr "Email"
-
-msgid "Email is already in use by other username"
-msgstr "Email sudah digunakan oleh pengguna lain"
-
-msgid "Enable forgot password"
-msgstr "Aktifkan lupa kata sandi"
-
-msgid "Enable public registration"
-msgstr "Aktifkan pendaftaran umum"
-
-msgid "Enable webservices"
-msgstr "Aktifkan webservices"
 
 msgid "Export"
 msgstr "Ekspor"
 
-msgid "F.A.Q"
-msgstr "F.A.Q"
+msgid "FATAL ERROR"
+msgstr ""
 
-msgid "Fail sent SMS, no credit"
-msgstr "Gagal mengirim SMS, tidak ada kredit"
+msgid "Fail to connect to database"
+msgstr ""
 
-msgid "Fail to delete SMS"
-msgstr "Gagal menghapus SMS"
-
-msgid "Fail to delete incoming SMS"
-msgstr "Gagal menghapus SMS masuk"
-
-msgid "Fail to delete user"
-msgstr "Gagal menghapus pengguna"
-
-msgid "Fail to edit message template"
-msgstr "Gagal mengubah pola pesan"
-
-msgid "Fail to recover password"
-msgstr "Gagal memulihkan password"
-
-msgid "Fail to register an account"
-msgstr "Gagal untuk mendaftarkan akun"
-
-msgid "Fail to save preferences"
-msgstr "Gagal menyimpan preferensi"
-
-msgid "Fail to send email"
-msgstr "Gagal mengirim SMS"
-
-msgid "Fail to sent SMS"
-msgstr "Gagal mengirim SMS"
-
-msgid "Failed"
-msgstr "Gagal"
-
-msgid "Feature"
-msgstr "Fitur"
-
-msgid "Fill to change password for username"
-msgstr "Isi untuk mengganti kata sandi untuk nama penguna"
-
-msgid "Fill to update"
+#, fuzzy
+msgid "Fail to load gateway"
 msgstr "Isi untuk memperbaharui"
 
-msgid "Flash message"
-msgstr "Pesan flash"
+#, fuzzy
+msgid "Fail to load language"
+msgstr "Bahasa default"
 
-msgid "Footer"
-msgstr "Catatan kaki"
+msgid "Fail to load main config from registry"
+msgstr ""
+
+#, fuzzy
+msgid "Fail to load themes"
+msgstr "Gagal mengirim SMS"
+
+#, fuzzy
+msgid "Features"
+msgstr "Fitur"
 
 #, fuzzy
 msgid "Forward"
 msgstr "teruskan"
-
-msgid "Forward PV to email"
-msgstr "Teruskan PV ke email"
-
-msgid "Forward PV to inbox"
-msgstr "Teruskan PV ke inbox"
-
-msgid "Forward PV to mobile"
-msgstr "Teruskan PV ke ponsel"
-
-msgid "Forward Private WebSMS"
-msgstr "Teruskan WebSMS pribadi"
-
-msgid "Forward SMS to email"
-msgstr "Teruskan SMS ke email"
-
-msgid "Forward SMS to inbox"
-msgstr "Teruskan SMS ke inbox"
-
-msgid "Forward SMS to mobile"
-msgstr "Teruskan SMS ke ponsel"
-
-msgid "Forward from"
-msgstr "Teruskan dari"
-
-#, fuzzy
-msgid "Forward message to email"
-msgstr "Teruskan PV ke email"
-
-#, fuzzy
-msgid "Forward message to inbox"
-msgstr "Teruskan PV ke inbox"
-
-#, fuzzy
-msgid "Forward message to mobile"
-msgstr "Teruskan PV ke ponsel"
-
-msgid "Forwarded email footer"
-msgstr "Footer email"
-
-msgid "From"
-msgstr "Dari"
-
-msgid "Full name"
-msgstr "Nama lengkap"
-
-msgid "Gateway"
-msgstr "Gateway"
 
 msgid "Go"
 msgstr "Jalankan"
@@ -313,52 +65,18 @@ msgstr "Jalankan"
 msgid "Group"
 msgstr "Grup"
 
-msgid "Group code"
-msgstr "Kode grup"
-
-msgid "HTTP API"
-msgstr "HTTP API"
-
 msgid "Home"
 msgstr "Beranda"
+
+msgid "Idle"
+msgstr ""
 
 #, fuzzy
 msgid "Import"
 msgstr "Ekspor"
 
-msgid "Inbox"
-msgstr "Kotak masuk"
-
-msgid "Incoming SMS"
-msgstr "SMS masuk"
-
-#, fuzzy
-msgid "Incoming messages"
-msgstr "Pesan unicode"
-
-msgid "Installation Guide"
-msgstr "Panduan Instalasi"
-
-msgid "International format"
-msgstr "Format internasional"
-
-msgid "Invalid username or password"
-msgstr "Kata sandi atau nama pengguna tidak valid"
-
-msgid "Keyword"
-msgstr "Kata kunci"
-
-msgid "Last update"
-msgstr "Terakhir ubah"
-
-msgid "License"
-msgstr "Lisensi"
-
-msgid "Local number length"
-msgstr "Panjang nomor lokal"
-
-msgid "Login information"
-msgstr "Informasi login"
+msgid "Login as"
+msgstr ""
 
 msgid "Logout"
 msgstr "Keluar"
@@ -366,524 +84,97 @@ msgstr "Keluar"
 msgid "Main configuration"
 msgstr "Konfigurasi utama"
 
-msgid "Main configuration changes has been saved"
-msgstr "Perubahan konfigurasi utama telah disimpan"
-
-msgid "Main website URL"
-msgstr ""
-
-msgid "Main website name"
-msgstr ""
-
 msgid "Manage"
 msgstr "Atur"
+
+#, fuzzy
+msgid "Manage account"
+msgstr "Akun saya"
+
+#, fuzzy
+msgid "Manage gateway"
+msgstr "Pengaturan pengguna"
+
+#, fuzzy
+msgid "Manage gateway and SMSC"
+msgstr "Pengaturan pengguna"
+
+#, fuzzy
+msgid "Manage sender ID"
+msgstr "ID pengirim SMS"
+
+#, fuzzy
+msgid "Manage sub-account"
+msgstr "Pengaturan pengguna"
+
+#, fuzzy
+msgid "Manage sub-accounts"
+msgstr "Pengaturan pengguna"
+
+#, fuzzy
+msgid "Manage subuser"
+msgstr "Pengaturan pengguna"
+
+#, fuzzy
+msgid "Manage subusers"
+msgstr "Pengaturan pengguna"
 
 msgid "Manage user"
 msgstr "Pengaturan pengguna"
 
-msgid "Max. 16 numeric or 11 alphanumeric characters"
-msgstr "Maks. 16 karakter numerik atau 11 alfanumerik"
-
-msgid "Max. 20 digits mobile phone number"
+msgid "Move"
 msgstr ""
-
-msgid "Max. 30 alphanumeric characters"
-msgstr "Maks. 30 karakter alfanumerik"
-
-msgid "Maximum SMS count"
-msgstr "Jumlah SMS maksimal"
-
-msgid "Message"
-msgstr "Pesan"
 
 #, fuzzy
-msgid "Message from"
-msgstr "Pesan"
-
-msgid "Message template"
-msgstr "Pola pesan"
-
-msgid "Message template content"
-msgstr "Isi pola pesan"
-
-msgid "Message template has been edited"
-msgstr "Pola pesan telah diubah"
-
-msgid "Message template has been saved"
-msgstr "Pola pesan telah disimpan"
-
-msgid "Message template name"
-msgstr "Nama pola pesan"
-
-msgid "Min length to detect missing country code"
-msgstr "Panjang minimum untuk mendeteksi kode negara"
-
-msgid "Mobile"
-msgstr "Ponsel"
-
-msgid "Mobile is already in use by other username"
-msgstr "Email sudah digunakan oleh pengguna lain"
-
-msgid "Mobile number"
-msgstr "Nomor telepon"
-
-msgid "Move to"
-msgstr ""
-
-msgid "My Account"
+msgid "My account"
 msgstr "Akun saya"
 
-msgid "Name"
-msgstr "Nama"
+msgid "Offline"
+msgstr ""
 
-msgid "New account registration"
-msgstr "Pendaftaran akun baru"
+msgid "Online"
+msgstr ""
 
-msgid "New webservices token"
-msgstr "Token webservices baru"
-
-msgid "No changes made"
-msgstr "Tidak ada perubahan yang dilakukan"
-
-msgid "Normal User"
-msgstr "Pengguna normal"
-
-msgid "Normal user"
-msgstr "Pengguna normal"
-
-#, fuzzy
-msgid "Options"
-msgstr "Tindakan"
-
-msgid "Or"
-msgstr "Atau"
-
-msgid "Outgoing SMS"
-msgstr "SMS keluar"
-
-#, fuzzy
-msgid "Outgoing messages"
-msgstr "SMS keluar"
-
-msgid "Password"
-msgstr "Kata sandi"
-
-msgid "Password does not match"
-msgstr "Kata sandi tidak cocok"
-
-msgid "Password has been sent to your email"
-msgstr "Password telah dikirim ke email Anda"
-
-msgid "Password recovery"
-msgstr "Pemulihan kata sandi"
-
-msgid "Password should be at least 4 characters"
-msgstr "Kata sandi minimal 4 karakter"
-
-msgid "Pending"
-msgstr "Tertunda"
-
-msgid "Personal information"
-msgstr "Informasi pribadi"
-
-msgid "Phone number(s)"
-msgstr "Nomor telepon"
-
-msgid "Phonebook"
-msgstr "Buku telepon"
-
-msgid "Phonebook groups"
-msgstr "Grup buku telepon"
-
-msgid "Phonebook numbers"
-msgstr "Nomor telepon"
-
-msgid "Pick Date & Time"
-msgstr "Pilih waktu & tanggal"
-
-#, fuzzy
-msgid "Pick date & time"
-msgstr "Pilih waktu & tanggal"
-
-msgid "Please select"
-msgstr "Silakan pilih"
-
-msgid "Please select template"
-msgstr "Silakan pilih"
+msgid "Please run composer.phar update"
+msgstr ""
 
 msgid "Preferences"
 msgstr "Preferensi"
 
-msgid "Preferences has been saved"
-msgstr "Preferensi telah disimpan"
-
-msgid "Preferences has been saved and password updated"
-msgstr "Preferensi sudah disimpan dan kata sandi sudah diperbaharui"
-
-msgid "Preferences has been saved and webservices token updated"
-msgstr "Preferensi sudah disimpan dan token webservices sudah diperbaharui"
-
-msgid "Prefix or country code"
-msgstr "Kode awalan atau kode negara"
-
-msgid "Public registration disabled"
-msgstr "Pendaftaran umum dinonaktifkan"
-
-msgid "Publish"
+msgid "Reduce"
 msgstr ""
-
-msgid "Re-Type Password"
-msgstr "Ketik ulang kata sandi"
-
-msgid "Re-type password"
-msgstr "Ketik ulang kata sandi"
-
-#, fuzzy
-msgid "Received"
-msgstr "Penerima"
-
-msgid "Receiver"
-msgstr "Penerima"
-
-msgid "Recover password disabled"
-msgstr "Pemulihan kata sandi dinonaktifkan"
-
-msgid "Registered"
-msgstr "Terdaftar"
-
-msgid "Replace prefix 0 or padding local numbers"
-msgstr "Ganti prefix 0 atau gabungkan nomor lokal"
 
 msgid "Reply"
 msgstr "Balas"
 
+#, fuzzy
+msgid "Reports"
+msgstr "Ekspor"
+
 msgid "Resend"
 msgstr ""
-
-msgid "SMS"
-msgstr ""
-
-msgid "SMS character"
-msgstr "Karakter SMS"
-
-msgid "SMS footer"
-msgstr "Catatan kaki SMS"
-
-#, fuzzy
-msgid "SMS from"
-msgstr "Catatan kaki SMS"
-
-msgid "SMS sender ID"
-msgstr "ID pengirim SMS"
-
-#, fuzzy
-msgid "SMS to email"
-msgstr "Teruskan SMS ke email"
-
-msgid "Sandbox"
-msgstr ""
-
-msgid "Save"
-msgstr "Simpan"
-
-msgid "Save template"
-msgstr "Simpan pola"
-
-msgid "Schedule"
-msgstr ""
-
-msgid "Search"
-msgstr "Cari"
-
-#, fuzzy
-msgid "Select"
-msgstr "Pilih tindakan"
-
-msgid "Select action"
-msgstr "Pilih tindakan"
-
-msgid "Selected incoming SMS has been deleted"
-msgstr "SMS masuk telah dihapus"
-
-#, fuzzy
-msgid "Selected incoming message has been deleted"
-msgstr "SMS masuk telah dihapus"
-
-msgid "Selected message template has been deleted"
-msgstr "Pola pesan telah dihapus"
-
-msgid "Selected outgoing SMS has been deleted"
-msgstr "SMS keluar yang dipilih telah dihapus"
-
-#, fuzzy
-msgid "Selected outgoing message has been deleted"
-msgstr "SMS keluar yang dipilih telah dihapus"
-
-msgid "Send"
-msgstr "Kirim"
-
-msgid "Send SMS"
-msgstr "Kirim SMS"
-
-msgid "Send as flash message"
-msgstr "Kirim sebagai pesan flash"
-
-msgid "Send as unicode message"
-msgstr "Kirim sebagai pesan unicode"
-
-msgid "Send broadcast SMS"
-msgstr "Kirim banyak SMS"
 
 #, fuzzy
 msgid "Send message"
 msgstr "Pesan unicode"
 
-msgid "Send to"
-msgstr "Kirim ke"
-
-msgid "Send to group"
-msgstr "Kirim ke grup"
-
-msgid "Sender"
-msgstr "Pengirim"
-
-msgid "Sent"
-msgstr "Terkirim"
-
-msgid "State or Province"
-msgstr "Propinsi"
-
-msgid "Status"
-msgstr "Status"
-
-msgid "This field is required"
+msgid "Settings"
 msgstr ""
 
-msgid "Time"
-msgstr "Waktu"
-
-msgid "Timezone"
-msgstr "Zona waktu"
-
-msgid "To"
-msgstr "Ke"
-
-msgid "Tools"
-msgstr "Alat"
-
-msgid "Unable to update login session"
+#, fuzzy
+msgid "Unable to find composer files"
 msgstr "Tidak dapat memperbaharui sesi login"
 
-msgid "Unicode message"
-msgstr "Pesan unicode"
-
-msgid "Unpublish"
+msgid "Unban"
 msgstr ""
-
-msgid "Use"
-msgstr "Pengguna"
-
-msgid "Use template"
-msgstr "Gunakan pola"
-
-msgid "User"
-msgstr "Pengguna"
-
-msgid "User already exists"
-msgstr "Pengguna sudah ada"
 
 #, fuzzy
 msgid "User configuration"
 msgstr "Konfigurasi utama"
 
 #, fuzzy
-msgid "User configuration has been saved"
-msgstr "Perubahan konfigurasi utama telah disimpan"
-
-#, fuzzy
-msgid "User configuration has been saved and password updated"
-msgstr "Preferensi sudah disimpan dan kata sandi sudah diperbaharui"
-
-#, fuzzy
-msgid "User configuration has been saved and webservices token updated"
-msgstr "Preferensi sudah disimpan dan token webservices sudah diperbaharui"
-
-msgid "User does not exists"
-msgstr "Pengguna tidak ada"
-
-msgid "User has been added"
-msgstr "Pengguna telah ditambah"
-
-msgid "User has been deleted"
-msgstr "Pengguna telah dihapus"
-
-msgid "User is already exists"
-msgstr "Pengguna sudah ada"
-
-msgid "User is immune to deletion"
-msgstr "Pengguna kebal untuk dihapus"
-
-msgid "User level"
-msgstr "Tingkatan pengguna"
-
-#, fuzzy
 msgid "User preference"
 msgstr "Preferensi"
 
-msgid "Username"
-msgstr "Nama pengguna"
-
-msgid "Username should be at least 3 characters"
-msgstr "Nama pengguna minimal 3 karakter"
-
-msgid "Valid characters for username are alphabets, numbers, dot or dash"
-msgstr ""
-"Karakter valid untuk nama pengguna adalah huruf, angka, titik dan garis bawah"
-
 msgid "View"
 msgstr "Tampil"
-
-msgid "View administrator"
-msgstr "Administrator"
-
-msgid "View groups"
-msgstr "Lihat group"
-
-msgid "View normal user"
-msgstr "Pengguna normal"
-
-msgid "View numbers"
-msgstr "Lihat nomor"
-
-msgid "Webapp Token"
-msgstr "Token Webapp"
-
-msgid "Webapp token"
-msgstr "Token webapp"
-
-msgid "Webservices"
-msgstr "Webservices"
-
-msgid "Webservices IP range"
-msgstr "IP webservices"
-
-msgid "Webservices token"
-msgstr "Token webservices"
-
-msgid "Webservices username"
-msgstr "Username webservices"
-
-msgid "Website email"
-msgstr "Email situs"
-
-msgid "Website title"
-msgstr "Judul situs"
-
-msgid "Welcome to playSMS"
-msgstr "Selamat datang di playSMS"
-
-msgid "You have been logged out"
-msgstr "Anda telah keluar"
-
-msgid "You have no access to this page"
-msgstr "Anda tidak memiliki akses ke halaman ini"
-
-msgid "You must fill all field"
-msgstr "Anda harus mengisi semua kolom"
-
-msgid "You must fill all fields"
-msgstr "Anda harus mengisi semua kolom"
-
-msgid "You must select receiver and your message should not be empty"
-msgstr "Anda harus memilih penerima dan pesan anda tidak boleh kosong"
-
-msgid "You must select receiver group and your message should not be empty"
-msgstr "Anda harus memilih kelompok penerima dan pesan anda tidak boleh kosong"
-
-msgid "Your SMS has been delivered to queue"
-msgstr "SMS anda telah dikirim ke antrian"
-
-msgid "Your email format is invalid"
-msgstr "Formail email tidak valid"
-
-msgid "Your message"
-msgstr "Pesan anda"
-
-#, fuzzy
-msgid "Your message has been delivered to queue"
-msgstr "SMS anda telah dikirim ke antrian"
-
-msgid "Your mobile format is invalid"
-msgstr "Nomor anda tidak valid"
-
-msgid "Zipcode"
-msgstr "Kode POS"
-
-msgid "chars"
-msgstr ""
-
-msgid "email"
-msgstr "email"
-
-msgid "failed"
-msgstr "gagal"
-
-msgid "format YYYY-MM-DD hh:mm"
-msgstr ""
-
-msgid "forward"
-msgstr "teruskan"
-
-msgid "from"
-msgstr "dari"
-
-msgid "generated on user creation"
-msgstr "dibuat saat user diciptakan"
-
-msgid "handled"
-msgstr "tertangani"
-
-msgid "mobile"
-msgstr "Ponsel"
-
-msgid "no"
-msgstr "tidak"
-
-msgid "not set"
-msgstr "belum diatur"
-
-msgid "number"
-msgstr "nomor"
-
-msgid "prefix with # for groups and @ for users"
-msgstr ""
-
-msgid "queued"
-msgstr "antri"
-
-msgid "reply"
-msgstr "balas"
-
-msgid "resend"
-msgstr ""
-
-msgid "row"
-msgstr "baris"
-
-msgid "shared by"
-msgstr "dibagi oleh"
-
-msgid "to"
-msgstr "ke"
-
-msgid "unhandled"
-msgstr "tidak tertangani"
-
-msgid "username"
-msgstr "nama pengguna"
-
-msgid "version"
-msgstr ""
-
-msgid "yes"
-msgstr "ya"

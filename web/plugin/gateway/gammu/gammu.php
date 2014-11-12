@@ -1,41 +1,26 @@
 <?php
 defined('_SECURE_') or die('Forbidden');
-if(!auth_isadmin()){auth_block();};
+if (!auth_isadmin()) {
+	auth_block();
+};
 
-include $apps_path['plug']."/gateway/gammu/config.php";
+include $core_config['apps_path']['plug'] . "/gateway/gammu/config.php";
 
-$gw = core_gateway_get();
-
-if ($gw == $gammu_param['name']) {
-	$status_active = "<span class=status_active />";
-} else {
-	$status_active = "<span class=status_inactive />";
-}
-
-switch ($op) {
+switch (_OP_) {
 	case "manage":
 		if ($err = $_SESSION['error_string']) {
 			$content = "<div class=error_string>$err</div>";
 		}
-		$content .= "
-			<h2>"._('Manage gammu')."</h2>
+		$content.= "
+			<h2>" . _('Manage gammu') . "</h2>
 			<table class=playsms-table>
 				<tbody>
 				<tr>
-					<td class=label-sizer>"._('Gateway name')."</td><td>gammu $status_active</td>
+					<td class=label-sizer>" . _('Gateway name') . "</td><td>gammu</td>
 				</tr>
 				</tbody>
 			</table>";
-		$content .= _back('index.php?app=menu&inc=tools_gatewaymanager&op=gatewaymanager_list');
-		echo $content;
-		break;
-	case "manage_activate":
-		$db_query = "UPDATE "._DB_PREF_."_tblConfig_main SET c_timestamp='".mktime()."',cfg_gateway_module='gammu'";
-		$db_result = dba_query($db_query);
-		$_SESSION['error_string'] = _('Gateway has been activated');
-		header("Location: index.php?app=menu&inc=gateway_gammu&op=manage");
-		exit();
+		$content.= _back('index.php?app=main&inc=core_gateway&op=gateway_list');
+		_p($content);
 		break;
 }
-
-?>

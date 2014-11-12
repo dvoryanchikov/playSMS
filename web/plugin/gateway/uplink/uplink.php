@@ -5,20 +5,11 @@ if (!auth_isadmin()) {
 	auth_block();
 };
 
-include $apps_path['plug'] . "/gateway/uplink/config.php";
+include $core_config['apps_path']['plug'] . "/gateway/uplink/config.php";
 
-$gw = core_gateway_get();
-
-if ($gw == $uplink_param['name']) {
-	$status_active = "<span class=status_active />";
-} else {
-	$status_active = "<span class=status_inactive />";
-}
-
-
-switch ($op) {
+switch (_OP_) {
 	case "manage":
-		if ($uplink_param['try_disable_footer']) {
+		if ($plugin_config['uplink']['try_disable_footer']) {
 			$selected['yes'] = 'selected';
 		} else {
 			$selected['no'] = 'selected';
@@ -31,40 +22,40 @@ switch ($op) {
 		$content = "
 			" . $error_content . "
 			<h2>" . _('Manage uplink') . "</h2>
-			<form action=index.php?app=menu&inc=gateway_uplink&op=manage_save method=post>
+			<form action=index.php?app=main&inc=gateway_uplink&op=manage_save method=post>
 			"._CSRF_FORM_."
 			<table class=playsms-table>
 				<tbody>
 				<tr>
-					<td class=label-sizer>" . _('Gateway name') . "</td><td>uplink $status_active</td>
+					<td class=label-sizer>" . _('Gateway name') . "</td><td>uplink</td>
 				</tr>
 				<tr>
-					<td>" . _('Master URL') . "</td><td><input type=text size=30 maxlength=250 name=up_master value=\"" . $uplink_param['master'] . "\"></td>
+					<td>" . _('Master URL') . "</td><td><input type=text maxlength=250 name=up_master value=\"" . $plugin_config['uplink']['master'] . "\"></td>
 				</tr>
 				<tr>
-					<td>" . _('Additional URL parameter') . "</td><td><input type=text size=30 maxlength=250 name=up_additional_param value=\"" . $uplink_param['additional_param'] . "\"></td>
+					<td>" . _('Additional URL parameter') . "</td><td><input type=text maxlength=250 name=up_additional_param value=\"" . $plugin_config['uplink']['additional_param'] . "\"></td>
 				</tr>
 				<tr>
-					<td>" . _('Webservice username') . "</td><td><input type=text size=30 maxlength=30 name=up_username value=\"" . $uplink_param['username'] . "\"></td>
+					<td>" . _('Webservice username') . "</td><td><input type=text maxlength=30 name=up_username value=\"" . $plugin_config['uplink']['username'] . "\"></td>
 				</tr>
 				<tr>
-					<td>" . _('Webservice token') . "</td><td><input type=text size=30 maxlength=32 name=up_token value=\"\"></td>
+					<td>" . _('Webservice token') . "</td><td><input type=text maxlength=32 name=up_token value=\"\"></td>
 				</tr>
 				<tr>
-					<td>" . _('Module sender ID') . "</td><td><input type=text size=30 maxlength=16 name=up_global_sender value=\"" . $uplink_param['global_sender'] . "\"> " . _hint(_('Max. 16 numeric or 11 alphanumeric char. empty to disable')) . "</td>
+					<td>" . _('Module sender ID') . "</td><td><input type=text maxlength=16 name=up_module_sender value=\"" . $plugin_config['uplink']['module_sender'] . "\"> " . _hint(_('Max. 16 numeric or 11 alphanumeric char. empty to disable')) . "</td>
 				</tr>
 				<tr>
 					<td>" . _('Try to disable SMS footer on master') . "</td><td><select name=up_try_disable_footer>" . $option_try_disable_footer . "</select></td>
 				</tr>
 				<tr>
-					<td>" . _('Module timezone') . "</td><td><input type=text size=5 maxlength=5 name=up_global_timezone value=\"" . $uplink_param['datetime_timezone'] . "\"> " . _hint(_('Eg: +0700 for Jakarta/Bangkok timezone')) . "</td>
+					<td>" . _('Module timezone') . "</td><td><input type=text size=5 maxlength=5 name=up_global_timezone value=\"" . $plugin_config['uplink']['datetime_timezone'] . "\"> " . _hint(_('Eg: +0700 for Jakarta/Bangkok timezone')) . "</td>
 				</tr>
 				</tbody>
 			</table>
 			<p><input type=submit class=button value=\"" . _('Save') . "\">
 			</form>";
-		$content .= _back('index.php?app=menu&inc=tools_gatewaymanager&op=gatewaymanager_list');
-		echo $content;
+		$content .= _back('index.php?app=main&inc=core_gateway&op=gateway_list');
+		_p($content);
 		break;
 	case "manage_save":
 		$up_master = $_POST['up_master'];
@@ -73,10 +64,10 @@ switch ($op) {
 		if ($up_token = $_POST['up_token']) {
 			$update_token = "cfg_token='" . $up_token . "',";
 		}
-		$up_global_sender = $_POST['up_global_sender'];
+		$up_module_sender = $_POST['up_module_sender'];
 		$up_global_timezone = $_POST['up_global_timezone'];
 		$up_try_disable_footer = $_POST['up_try_disable_footer'];
-		$_SESSION['error_string'] = _('No changes has been made');
+		$_SESSION['error_string'] = _('No changes have been made');
 		if ($up_master && $up_username) {
 			$db_query = "
 				UPDATE " . _DB_PREF_ . "_gatewayUplink_config
@@ -85,22 +76,14 @@ switch ($op) {
 				cfg_additional_param='$up_additional_param',
 				cfg_username='$up_username',
 				" . $update_token . "
-				cfg_global_sender='$up_global_sender',
+				cfg_module_sender='$up_module_sender',
 				cfg_datetime_timezone='$up_global_timezone',
 				cfg_try_disable_footer='$up_try_disable_footer'";
 			if (@dba_affected_rows($db_query)) {
 				$_SESSION['error_string'] = _('Gateway module configurations has been saved');
 			}
 		}
-		header("Location: index.php?app=menu&inc=gateway_uplink&op=manage");
-		exit();
-		break;
-	case "manage_activate":
-		$db_query = "UPDATE " . _DB_PREF_ . "_tblConfig_main SET c_timestamp='" . mktime() . "',cfg_gateway_module='uplink'";
-		$db_result = dba_query($db_query);
-		$_SESSION['error_string'] = _('Gateway has been activated');
-		header("Location: index.php?app=menu&inc=gateway_uplink&op=manage");
+		header("Location: "._u('index.php?app=main&inc=gateway_uplink&op=manage'));
 		exit();
 		break;
 }
-?>

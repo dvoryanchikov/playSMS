@@ -1,0 +1,83 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: \n"
+"POT-Creation-Date: \n"
+"PO-Revision-Date: \n"
+"Last-Translator: Alexey Dvoryachikov <gdemoyinternet@ya.ru>\n"
+"Language-Team: \n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 1.5.4\n"
+
+msgid "Action"
+msgstr "Действие"
+
+msgid "Add SMSC"
+msgstr ""
+
+msgid "Are you sure ?"
+msgstr ""
+
+msgid "Description"
+msgstr "Описание"
+
+msgid "Edit SMSC"
+msgstr ""
+
+msgid "Fail to add new SMSC"
+msgstr ""
+
+msgid "Fail to edit SMSC"
+msgstr ""
+
+msgid "Fail to remove SMSC"
+msgstr ""
+
+msgid "Gateway"
+msgstr ""
+
+msgid "Gateways"
+msgstr ""
+
+#, fuzzy
+msgid "List of gateways and SMSCs"
+msgstr "Управление шлюзами"
+
+#, fuzzy
+msgid "Manage gateway and SMSC"
+msgstr "Управление шлюзами"
+
+msgid "Name"
+msgstr "Имя"
+
+msgid "New SMSC has been added"
+msgstr ""
+
+msgid "Routed SMSC"
+msgstr ""
+
+msgid "SMSC already exists"
+msgstr ""
+
+msgid "SMSC has been edited"
+msgstr ""
+
+msgid "SMSC has been removed"
+msgstr ""
+
+msgid "SMSC name"
+msgstr ""
+
+msgid "SMSCs"
+msgstr ""
+
+msgid "Save"
+msgstr ""
+
+msgid "Supplied SMSC"
+msgstr ""
+
+msgid "Unknown error"
+msgstr ""
